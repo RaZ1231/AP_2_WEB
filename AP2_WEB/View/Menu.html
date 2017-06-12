@@ -4,9 +4,30 @@
     <title></title>
     <meta charset="utf-8" />
     <style>
-        ul#menu li {
-            display: inline;
+        ul {
+            font-family:Verdana;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
         }
+
+        li {
+            float: left;
+        }
+
+            li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+                li a:hover {
+                    background-color: #111;
+                }
     </style>
 </head>
 <body>
@@ -15,11 +36,11 @@
             <ul id="menu">
                 <li><a href="HomePage.html">Maze</a></li>
                 <li><a href="SinglePlayer.html">Single Player</a></li>
-                <li><a>Multi Player</a></li>
-                <li><a>Settings</a></li>
-                <li><a>User Rankings</a></li>
-                <li style="float:right; color:aqua"><a>Login</a></li>
-                <li style="float:right; color:blue"><a>Register</a></li>
+                <li><a href="">Multi Player</a></li>
+                <li><a href="">Settings</a></li>
+                <li><a href="">User Rankings</a></li>
+                <li style="float:right"><a href="">Login</a></li>
+                <li style="float:right"><a href="">Register</a></li>
             </ul>
         </div>
     </nav>
