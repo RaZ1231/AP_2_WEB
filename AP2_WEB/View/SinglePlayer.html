@@ -3,23 +3,14 @@
 <head>
     <title>Single Player</title>
     <meta charset="utf-8" />
-    <script type="text/javascript" src="Maze.js"></script>
 
 </head>
 
 <body>
     <div id="menuBar"></div>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            $("#menuBar").load("Menu.html");
-            $("#newGameForm").load("NewGameForm.html");
-        });
-    </script>
+
     <header>
-        <h2 style="font-family:Verdana">Single Player Game</h2><hr />
+        <h2 style="font-family:Verdana">9Single Player Game</h2><hr />
     </header>
 
     <div id="newGameForm" style="display:inline-block; float:left"></div>
@@ -30,24 +21,48 @@
         <img id="exit" src="/Resources/Spiral.jpg" style="display:none" />
         <canvas style="border-color:purple;" id="mazeCanvas" tabindex="1" class="maze-board" width="500" height="500"></canvas>
 
-        <input type="text" id="txt1" />
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+                integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+                crossorigin="anonymous"></script>
+        <script type="text/javascript" src="Maze.js"></script>
         <script>
-            document.addEventListener("keydown", keydown, false);
-        </script>
+            $(document).ready(function () {
+                $("#menuBar").load("Menu.html");
+                $("#newGameForm").load("NewGameForm.html");
 
-        <input type="text" id="input" />
-
-        <script type="text/javascript">
-
-            var maze = [[0, 1, 0, 1, 0, 1],
+                var mazeData = [[0, 1, 0, 1, 0, 1],
                 ['#', 0, 0, 1, 1, 0],
                 [0, 1, 0, 0, 0, 0],
                 [0, 1, 0, 1, 1, 1],
                 [0, 1, 0, 0, 0, 0],
                 [1, 1, 0, '*', 1, 0],
                 [0, 0, 0, 0, 0, 1]];
-            drawMaze(maze);
-            handleKeys();
+
+                var startRow = 1;
+                var startCol = 0;
+                var exitRow = 5;
+                var exitCol = 3;
+
+                var playerImage = document.getElementById("player");
+                var exitImage = document.getElementById("exit");
+                var enabled = true;
+                var moveFunction = undefined;
+
+                $("#mazeCanvas").mazeBoard(
+                    mazeData, // the matrix containing the maze cells
+                    startRow,
+                    startCol, // initial position of the player
+                    exitRow,
+                    exitCol, // the exit position
+                    playerImage, // player's icon (of type Image)
+                    exitImage,
+                    enabled,
+                    moveFunction
+                );
+
+            });
+
+            document.addEventListener("keydown", keydown, false);
         </script>
     </div>
 
