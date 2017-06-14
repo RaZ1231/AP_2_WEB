@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Maze Game</title>
+    <title>Login</title>
     <meta charset="utf-8" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -11,20 +11,22 @@
 <body>
     <header>
         <div id="menuBar"></div>
-       
+
         <script>
             $(document).ready(function () {
                 $("#menuBar").load("Menu.html");
+                $("#registerForm").load("RegisterForm.html");
             });
         </script>
     </header>
 
-    <article>
-        <div style="padding-left:200px; background-color:dimgray; font-family:Verdana">
-            <h1 style="color:white">Play Maze Game</h1>
-            <p style="color:white">Play the original maze game for free.</p>
-            <p style="color:white">Play online with your friends!</p>
+    <article style="padding-left:200px; font-family:Verdana">
+        <div>
+            <h1>Register</h1>
+            <p>Create a local account to play On-line.</p>
         </div>
+
+        <div id="registerForm" style="font-size:large"></div>
     </article>
 </body>
 </html>

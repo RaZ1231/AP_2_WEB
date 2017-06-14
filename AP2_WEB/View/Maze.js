@@ -1,10 +1,16 @@
-﻿var context;
+﻿function playerObj() {
+    var pRow;
+    var pCol;
+}
+
+var context;
 var cellWidth;
 var cellHeight;
 var maze;
-var pRow;
-var pCol;
-var playerImg;
+var playerProp;
+var myCanvas;
+var exitR;
+var exitC;
 
 (function ($) {
     $.fn.mazeBoard = function (
@@ -17,20 +23,23 @@ var playerImg;
         moveFunction
     ) {
 
-        var myCanvas = $(this);
-        context = mazeCanvas.getContext("2d");
-        var rows = mazeData.length; var cols = mazeData[0].length;
-        cellWidth = mazeCanvas.width / cols;
-        cellHeight = mazeCanvas.height / rows;
+        myCanvas = document.getElementById("mazeCanvas");
+        context = myCanvas.getContext("2d");
+        var rows = mazeData.length;
+        var cols = mazeData[0].length;
+        cellWidth = 50;// Math.floor((myCanvas.width) / cols);
+        cellHeight = 50;// Math.floor((myCanvas.height) / rows);
+        exitR = exitRow;
+        exitC = exitCol;
         maze = mazeData;
-        var x = 0;
-        var y = 0;
-        pRow = startRow;
-        pCol = startCol;
+
+        playerProp = new playerObj();
+        playerProp.pRow = startRow;
+        playerProp.pCol = startCol;
 
         for (var i = 0; i < rows; i++) {
             for (var j = 0; j < cols; j++) {
-                if (mazeData[i][j] == 1) {
+                if (maze[i][j] == 1) {
                     context.fillRect(cellWidth * j, cellHeight * i, cellWidth, cellHeight);
                 }
             }
@@ -40,18 +49,10 @@ var playerImg;
         context.drawImage(exit, exitCol * cellWidth, exitRow * cellHeight, cellWidth, cellHeight);
 
         var player = playerImage;
-        
-        playerImg = new Image();
-        playerImg.src = "/Resources/mario.jpg";
-        playerImg.style.position = absolute;
-        var topPX = startRow * cellHeight + 'px';
-        var leftPX = startCol * cellWidth + 'px';
-        playerImg.style.top = topPX;
-        playerImg.style.left = leftPX;
         context.drawImage(player, startCol * cellWidth, startRow * cellHeight, cellWidth, cellHeight);
 
         var enterence = document.getElementById("enterence");
-        enterence.src = "/Resources/door.jpg";
+        //enterence.src = "/Resources/door.jpg";
 
         return this;
     };
@@ -59,83 +60,102 @@ var playerImg;
 
 
 function keydown(e) {
+    if(playerProp.pRow != exitR || playerProp.pCol != exitC) {
+        context.fillStyle = "white";
+        context.fillRect(playerProp.pCol * cellHeight, playerProp.pRow * cellWidth, cellWidth, cellHeight);
+    } else {
+        var exit = document.getElementById("exit");
+        context.drawImage(exit, exitC * cellWidth, exitR * cellHeight, cellWidth, cellHeight);
+    }
+    
     switch (e.which) {
-        case 37:
-            move("left", pRow, pCol);
-            break;
-        case 38:
-            move("up", pRow, pCol);
-            break;
-        case 39:
-            move("right", pRow, pCol);
-            alert("woohoo");
-            break;
-        case 40:
-            move("down", pRow, pCol);
-            break;
-    }
-}
-
-function move(direction, playerRow, playerCol) {
-    player.hide();
-    switch (direction) {
-        case "left":
-            if (playerCol > 0) {
-                if (mazeData[playerRow][playerCol - 1] != '1') {
-                    //playerCol = playerCol - 1;
-                    var element = document.getElementById("player");
-                    element.style.left = parseInt(element.style.left) - cellWidth + 'px';
+        case 37: // left
+            if (playerProp.pCol > 0) {
+                if (maze[playerProp.pRow][playerProp.pCol - 1] != 1) {
+                    playerProp.pCol = playerProp.pCol - 1;
                 }
             }
             break;
-        case "up":
-            if (playerRow > 0) {
-                if (mazeData[playerRow - 1][playerCol] != '1') {
-                    //playerRow = playerRow - 1;
-                    var element = document.getElementById("player");
-                    element.style.top = parseInt(element.style.top) - cellHeight + 'px';
+        case 38: //up
+            if (playerProp.pRow > 0) {
+                if (maze[playerProp.pRow - 1][playerProp.pCol] != 1) {
+                    playerProp.pRow = playerProp.pRow - 1;
                 }
             }
             break;
-        case "right":
-            if (playerCol < mazeData[0].length) {
-                if (mazeData[playerRow][playerCol + 1] != '1') {
-                    //playerCol = playerCol + 1;
-                    var element = document.getElementById("player");
-                    element.style.left = parseInt(element.style.left) + cellWidth + 'px';
-                    alert("woohoo");
+        case 39: // right
+            if (playerProp.pCol < maze[0].length - 1) {
+                if (maze[playerProp.pRow][playerProp.pCol + 1] != 1) {
+                    playerProp.pCol = playerProp.pCol + 1;
                 }
             }
             break;
-        case "down":
-            if (playerCol < mazeData[0].length) {
-                if (mazeData[playerRow + 1][playerCol] != '1') {
-                    //playerRow = playerRow + 1;
-                    var element = document.getElementById("player");
-                    element.style.top = parseInt(element.style.top) + cellHeight + 'px';
+        case 40: // down
+            if (playerProp.pRow < maze[0].length) {
+                if (maze[playerProp.pRow + 1][playerProp.pCol] != 1) {
+                    playerProp.pRow = playerProp.pRow + 1;
                 }
             }
             break;
     }
-    //context.drawImage(player, playerCol * cellHeight, playerRow * cellWidth, cellWidth, cellHeight);
+
+    context.drawImage(player, playerProp.pCol * cellHeight, playerProp.pRow * cellWidth, cellWidth, cellHeight);
+
+    if (playerProp.pRow == exitR && playerProp.pCol == exitC) {
+        alert("Yay!");
+    }
 }
 
-var mazeData = [[0, 1, 0, 1, 0, 1],
-['#', 0, 0, 1, 1, 0],
-[0, 1, 0, 0, 0, 0],
-[0, 1, 0, 1, 1, 1],
-[0, 1, 0, 0, 0, 0],
-[1, 1, 0, '*', 1, 0],
-[0, 0, 0, 0, 0, 1]];
+function solve(solution) {
+    var sol = "11333333331";
+    solution = sol;
 
-var startRow = 1;
-var startCol = 0;
-var exitRow = 5;
-var exitCol = 3
-var playerImage = document.getElementById("player");
-var exitImage = document.getElementById("exit");
-var enabled = true;
-var moveFunction = undefined;
+    for (var i = 0; i < solution.length; i++) {
+        if (playerProp.pRow != exitR || playerProp.pCol != exitC) {
+            context.fillStyle = "white";
+            context.fillRect(playerProp.pCol * cellHeight, playerProp.pRow * cellWidth, cellWidth, cellHeight);
+        } else {
+            var exit = document.getElementById("exit");
+            context.drawImage(exit, exitC * cellWidth, exitR * cellHeight, cellWidth, cellHeight);
+        }
 
+        switch (solution[i]) {
+            case '0': // left
+                if (playerProp.pCol > 0) {
+                    if (maze[playerProp.pRow][playerProp.pCol - 1] != 1) {
+                        playerProp.pCol = playerProp.pCol - 1;
+                    }
+                }
+                break;
+            case '2': //up
+                if (playerProp.pRow > 0) {
+                    if (maze[playerProp.pRow - 1][playerProp.pCol] != 1) {
+                        playerProp.pRow = playerProp.pRow - 1;
+                    }
+                }
+                break;
+            case '1': // right
+                if (playerProp.pCol < maze[0].length - 1) {
+                    if (maze[playerProp.pRow][playerProp.pCol + 1] != 1) {
+                        playerProp.pCol = playerProp.pCol + 1;
+                    }
+                }
+                break;
+            case '3': // down
+                if (playerProp.pRow < maze[0].length) {
+                    if (maze[playerProp.pRow + 1][playerProp.pCol] != 1) {
+                        playerProp.pRow = playerProp.pRow + 1;
+                    }
+                }
+                break;
+        }
+        
+        context.drawImage(player, playerProp.pCol * cellHeight, playerProp.pRow * cellWidth, cellWidth, cellHeight);
 
-
+        if (playerProp.pRow == exitR && playerProp.pCol == exitC) {
+            alert("Yay!");
+            break;
+        }
+        // need to sleep somehow for animation.
+    }
+}
