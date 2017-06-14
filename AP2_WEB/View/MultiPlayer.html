@@ -1,42 +1,46 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Single Player</title>
+    <title>Multi Player</title>
     <meta charset="utf-8" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="/Scripts/Maze.js"></script>
+    <script type="text/javascript" src="/Scripts/MultiMaze.js"></script>
     <script src="../Scripts/MenuLoader.js"></script>
 </head>
-
 <body>
     <div id="menuBar"></div>
 
     <header style="font-family:Verdana">
-        <h2>Single Player Game</h2><hr />
-        <button id="bla" value="solve" onclick="solve()" style="height:30px;"/>
+        <h2>Multi Player Game</h2><hr />
     </header>
-    
-    <div style="display:inline-block; float:left; font-size:larger; font-family:Verdana;">
-        <div id="newGameForm"></div>
 
-        <br />
-        <b>Search Algo: </b>
-        <select id="searchAlgo" form="chooseAlgo">
-            <option>BFS</option>
-            <option>DFS</option>
+    <div style="display:inline-block; float:left; font-size:larger; font-family:Verdana;">
+        <b>Games: </b>
+        <select id="gamesList" form="chooseGame">
         </select>
-        <form id="chooseAlgo" style="padding-left:80px;" action="">
-            <input type="submit" value="Solve Game">
+        <form id="chooseGame" style="padding-left:80px;" action="">
+            <input type="submit" value="Join Game">
         </form>
+        <br />
+        <div id="newGameForm"></div>
     </div>
 
-    <div id="maze" style="float:left; padding:30px" class="col-sm-8 form-horizontal">
+    <div id="maze" style="float:left; padding:30px; font-family:Verdana;" class="col-sm-8 form-horizontal">
         <img id="player" src="/Resources/mario.jpg" style="display:none" />
         <img id="exit" src="/Resources/Spiral.jpg" style="display:none" />
-        <canvas style="border:solid; border-color:purple;" id="mazeCanvas" tabindex="1" class="maze-board" width="800" height="800"></canvas>
+        <div style="display:inline-block;">
+            My Board
+            <br />
+            <canvas style="border:solid; border-color:purple;" id="myMazeCanvas" tabindex="1" class="maze-board" width="500" height="500"></canvas>
+        </div>
+
+        <div style="float:right; padding-left:50px">
+            Opponent Board<br />
+            <canvas style="border:solid; border-color:red;" id="opMazeCanvas" tabindex="1" class="maze-board" width="500" height="500"></canvas>
+        </div>
 
         <script>
             $(document).ready(function () {
@@ -67,12 +71,24 @@
                 var enabled = true;
                 var moveFunction = undefined;
 
-                $("#mazeCanvas").mazeBoard(
+                $("#myMazeCanvas").mazeBoard(
                     mazeData, // the matrix containing the maze cells
                     startRow,
                     startCol, // initial position of the player
                     exitRow,
-                    exitCol, // the exit position 
+                    exitCol, // the exit position
+                    playerImage, // player's icon (of type Image)
+                    exitImage,
+                    enabled,
+                    moveFunction
+                );
+
+                $("#opMazeCanvas").mazeBoard(
+                    mazeData, // the matrix containing the maze cells
+                    startRow,
+                    startCol, // initial position of the player
+                    exitRow,
+                    exitCol, // the exit position
                     playerImage, // player's icon (of type Image)
                     exitImage,
                     enabled,
@@ -83,6 +99,5 @@
             document.addEventListener("keydown", keydown, false);
         </script>
     </div>
-    
 </body>
 </html>
