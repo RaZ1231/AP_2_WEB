@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Product App</title>
+</head>
+<body>
+    <div>
+        <h2>7All Products</h2>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+                integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+                crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function () {
+                var apiUrl = "/api/Product/";
+
+                // Send an AJAX request
+                $.getJSON(apiUrl).done(function (data) {
+                    data.forEach(function (product) {
+                        // Add a list item for the product
+                        $("<li>" + product.Name + ": $" + product.Price + "</li>").appendTo("#lstProducts");
+                    });
+                });
+
+                $("#btnSearch").click(function () {
+                    $("#product").text(apiUrl + "/" + id + "/");
+
+                    var id = $("#txtProductId").val();
+                    $.getJSON(apiUrl + "/" + id + "/")
+                        .done(function (product) {
+                            $("#product").text(product.Name + ": $" + product.Price);
+                        })
+                        .fail(function (jqXHR, textStatus, err) {
+                            $("#product").text("Error: " + err);
+                        });
+                });
+
+                $("#btnAddProduct").click(function () {
+                    var product = {
+                        Id: $("#prodId").val(),
+                        Name: $("#prodName").val(),
+                        Category: $("#prodCategory").val(),
+                        Price: $("#prodPrice").val()
+                    };
+                    $.post(apiUrl, product)
+                        .done(function () {
+                            alert("Product added successfully");
+                        });
+                });
+            });
+        </script>
+        <ul id="lstProducts"></ul>
+
+    </div>
+    <div>
+        <h2>Search by ID</h2>
+        <input type="text" id="txtProductId" size="5" />
+        <input type="button" id="btnSearch" value="Search" />
+        <p id="product" />
+    </div>
+    <div>
+        <h2>Add Product</h2>
+        <table>
+            <tr>
+                <td>Id: </td>
+                <td><input type="text" id="prodId" size="5" /></td>
+            </tr>
+            <tr>
+                <td>Name: </td>
+                <td><input type="text" id="prodName" /></td>
+            </tr>
+            <tr>
+                <td>Category: </td>
+                <td><input type="text" id="prodCategory" /></td>
+            </tr>
+            <tr>
+                <td>Price: </td>
+                <td><input type="text" id="prodPrice" /></td>
+            </tr>
+        </table>
+        <input type="button" id="btnAddProduct" value="Add Product" />
+    </div>
+</body>
+</html>
