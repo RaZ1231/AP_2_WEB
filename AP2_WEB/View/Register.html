@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+    </script>
+    <script src="../Scripts/MenuLoader.js"></script>
+</head>
+<body>
+    <header>
+        <div id="menuBar"></div>
+
+        <script>
+            $(document).ready(function () {
+                $("#registerForm").load("RegisterForm.html");
+            });
+        </script>
+    </header>
+
+    <article style="padding-left:200px; font-family:Verdana">
+        <div>
+            <h1>Register</h1>
+            <p>Create a local account to play On-line.</p>
+        </div>
+
+        <div id="registerForm" style="font-size:large"></div>
+    </article>
+</body>
+</html>

@@ -3,21 +3,14 @@
 <head>
     <title>Maze Game</title>
     <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+    </script>
+    <script src="../Scripts/MenuLoader.js"></script>
 </head>
 <body>
-    <header>
-        <div id="menuBar"></div>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-                integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-                crossorigin="anonymous">
-        </script>
-        <script>
-            $(document).ready(function () {
-                $("#menuBar").load("Menu.html");
-            });
-        </script>
-    </header>
-
+    <div id="menuBar"></div>
     <article>
         <div style="padding-left:200px; background-color:dimgray; font-family:Verdana">
             <h1 style="color:white">Play Maze Game</h1>
