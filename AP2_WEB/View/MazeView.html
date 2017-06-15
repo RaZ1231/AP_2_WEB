@@ -15,8 +15,11 @@
         <script src="/signalr/hubs" type="text/javascript"></script>
 
         <div class="container">
-            <input type="text" id="message" />
-            <input type="button" id="btnSendMessage" value="Send" />
+            <ul id="chat"></ul>
+        </div>
+        <div class="container">
+            <input type="text" id="txtMove" />
+            <input type="button" id="btnMoveMessage" value="Move" />
             <ul id="chat"></ul>
         </div>
 
@@ -24,48 +27,52 @@
             $(document).ready(function () {
                 // Declare a proxy to reference the hub
                 var chat = $.connection.gameHub;
-                // Create a function that the hub can call to broadcast messages
-                chat.client.broadcastMessage = function (name, message) {
-                    // Add the message to the page
-                    $('#chat').append('<li><strong>' + name
-                        + '</strong>:&nbsp;&nbsp;' + message + '</li>');
+
+                chat.client.broadcastMessage = function (json) {
+                    $('#chat').append('<li><strong>Maze</strong>:&nbsp;&nbsp;' + json + '</li>');
                 };
 
-                // Get the user name and store it to prepend to messages
-                var username = prompt('Enter your name:');
-                // Set initial focus to message input box
-                $('#message').focus();
-
-                // Start the connection
+                // Start
                 $.connection.hub.start().done(function () {
                     $('#btnSendMessage').click(function () {
-                        // Call the Send method on the hub
-                        chat.server.send(username, $('#message').val());
+                        chat.server.start(
+                            $("#prodName").val(),
+                            $("#prodCategory").val(),
+                            $("#prodPrice").val()
+                        );
+                    });
+
+                    // Join
+                    $('#btnJoinMessage').click(function () {
+                        chat.server.join(
+                            $("#prodName").val(),
+                        );
                         // Clear text box and reset focus for next comment
                         $('#message').val('').focus();
                     });
-                });
 
-                var apiUrl = "/api/Maze/";
-
-                // list AJAX request
-                $.getJSON(apiUrl).done(function (data) {
-                    data.forEach(function (product) {
-                        // Add a list item for the product
-                        $("<li>" + product.Name + ": " + product.Data + "</li>").appendTo("#lstProducts");
+                    // Move
+                    $('#btnMoveMessage').click(function () {
+                        // Call the Send method on the hub
+                        chat.server.move(
+                            $("#prodName").val(),
+                            $("#txtMove").val(),
+                        );
+                        // Clear text box and reset focus for next comment
+                        $('#txtMove').val('').focus();
                     });
                 });
 
-                // join AJAX request
-                $("#btnSearch").click(function () {
-                    var name = $("#txtProductId").val();
-                    $.getJSON(apiUrl + name + "/")
-                        .done(function (product) {
-                            $("#product").text(product.Name + ": " + product.Data);
-                        })
-                        .fail(function (jqXHR, textStatus, err) {
-                            $("#product").text("Error: " + err);
+                var apiUrl = "/api/Maze/"; // base uri of requests
+
+                // list
+                $("#btnListMessage").click(function () {
+                    $.getJSON(apiUrl).done(function (data) {
+                        $("#lstProducts").empty();
+                        data.forEach(function (product) {
+                            $("<li>" + product + "</li>").appendTo("#lstProducts");
                         });
+                    });
                 });
 
                 // generate
@@ -95,16 +102,9 @@
             });
         </script>
         <ul id="lstProducts"></ul>
-
     </div>
     <div>
-        <h2>Search by Name</h2>
-        <input type="text" id="txtProductId" size="5" />
-        <input type="button" id="btnSearch" value="Search" />
-        <p id="product" />
-    </div>
-    <div>
-        <h2>Generate</h2>
+        <h2>Create</h2>
         <table>
             <tr>
                 <td>Name: </td>
@@ -120,6 +120,9 @@
             </tr>
         </table>
         <input type="button" id="btnAddProduct" value="Generate" />
+        <input type="button" id="btnListMessage" value="List" />
+        <input type="button" id="btnSendMessage" value="Start" />
+        <input type="button" id="btnJoinMessage" value="Join" />
     </div>
     <div>
         <h2>Solve</h2>

@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using AP2_WEB.Controllers;
+using AP2_WEB.Models;
+using MazeComp;
+using MazeGeneratorLib;
+using MazeLib;
+using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +17,53 @@ namespace AP2_WEB.SignalR
         {
             // Call the broadcastMessage method to update clients
             Clients.All.broadcastMessage(name, message);
+        }
+
+        public void Start(string name, int rows, int cols)
+        {
+            Maze maze = new DFSMazeGenerator().Generate(rows, cols);
+
+            maze.Name = name;
+
+            MazeGame game = new MazeGame()
+            {
+                Name = name,
+                Maze = maze
+            };
+
+            game.Players.Add(Context.ConnectionId, maze.InitialPos);
+
+            MazeController.pending[name] = game;
+        }
+
+        public void Join(string name)
+        {
+            MazeGame game = MazeController.pending[name];
+
+            MazeController.pending.Remove(name);
+            MazeController.multi[name] = game;
+
+            game.Players.Add(Context.ConnectionId, game.Maze.InitialPos);
+
+            string json = game.Maze.ToJSON();
+
+            game.Players.Keys.ToList().ForEach(id => Clients.Client(id).broadcastMessage(json));
+        }
+
+        public void Move(string name, int direction)
+        {
+            MazeGame game = MazeController.multi[name];
+
+            Move move = new Move()
+            {
+                MazeName = game.Name,
+                Direction = (Direction)direction
+            };
+
+            string json = move.ToJSON();
+
+            game.Players.Keys.Where(id => id != Context.ConnectionId).ToList()
+                .ForEach(id => Clients.Client(id).broadcastMessage(json));
         }
     }
 }

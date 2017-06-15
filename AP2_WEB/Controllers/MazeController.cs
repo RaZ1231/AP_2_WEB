@@ -15,11 +15,11 @@ namespace AP2_WEB.Controllers
 {
     public class MazeController : ApiController
     {
-        private static Dictionary<string, MazeGame> pending = new Dictionary<string, MazeGame>();
+        public static Dictionary<string, MazeGame> pending = new Dictionary<string, MazeGame>();
 
-        private static Dictionary<string, MazeGame> multi = new Dictionary<string, MazeGame>();
+        public static Dictionary<string, MazeGame> multi = new Dictionary<string, MazeGame>();
 
-        private static Dictionary<string, MazeGame> single = new Dictionary<string, MazeGame>();
+        public static Dictionary<string, MazeGame> single = new Dictionary<string, MazeGame>();
 
         // list
         public IEnumerable<string> GetAllMazes()
@@ -29,11 +29,7 @@ namespace AP2_WEB.Controllers
                 return new List<string>();
             }
 
-            List<string> list = new List<string>();
-
-            pending.Values.ToList().ForEach(m => list.Add(m.Name));
-
-            return list;
+            return pending.Values.Select(game => game.Name);
         }
 
         // join
