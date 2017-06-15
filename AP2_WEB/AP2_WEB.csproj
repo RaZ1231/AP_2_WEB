@@ -201,8 +201,6 @@
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\MenuLoader.js" />
     <Content Include="View\HomePage.html" />
-    <Content Include="View\Maze.html" />
-    <Content Include="View\Maze.js" />
     <Content Include="View\MazeView.html" />
     <Content Include="View\Login.html" />
     <Content Include="View\LoginForm.html" />
