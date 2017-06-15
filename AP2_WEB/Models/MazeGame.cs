@@ -23,7 +23,7 @@ namespace AP2_WEB.Models
         /// <summary>
         /// A dictionary of player's to their positions in the maze.
         /// </summary>
-        public Dictionary<TcpClient, Position> Players { get; set; }
+        public Dictionary<string, Position> Players { get; set; }
 
         /// <summary>
         /// The number of players in the game.
@@ -40,7 +40,7 @@ namespace AP2_WEB.Models
         /// </summary>
         public MazeGame()
         {
-            Players = new Dictionary<TcpClient, Position>();
+            Players = new Dictionary<string, Position>();
             Solution = null;
         }
 
