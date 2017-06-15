@@ -13,7 +13,7 @@
                         <b>Name:</b>
                     </td>
                     <td>
-                        <input type="text" name="mazeName" value="">
+                        <input type="text" id="mazeName" name="mazeName" value="">
                     </td>
                 </tr>
                 <tr>
@@ -21,7 +21,7 @@
                         <b>Rows:</b>
                     </td>
                     <td>
-                        <input type="text" name="rows" value="0">
+                        <input type="text" id="rows" name="rows" value="0">
                     </td>
                 </tr>
                 <tr>
@@ -29,17 +29,13 @@
                         <b>Cols:</b>
                     </td>
                     <td>
-                        <input type="text" name="cols" value="0">
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type="submit" value="Start new game">
+                        <input type="text" id="cols" name="cols" value="0">
                     </td>
                 </tr>
             </tbody>
         </table>
+        <input type="button" id="btnNewGame" value="Generate" />
+        <p id="product" />
     </form>
 </body>
 </html>

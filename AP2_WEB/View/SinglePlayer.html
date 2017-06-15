@@ -15,12 +15,27 @@
     <div id="menuBar"></div>
 
     <header style="font-family:Verdana">
-        <h2>Single Player Game</h2><hr />
-        <button id="bla" value="solve" onclick="solve()" style="height:30px;"/>
+        <h2>0Single Player Game</h2><hr />
+        <button id="bla" value="solve" onclick="solve()" style="height:30px;" />
     </header>
-    
+
     <div style="display:inline-block; float:left; font-size:larger; font-family:Verdana;">
-        <div id="newGameForm"></div>
+        <p id="product" />
+        <table>
+            <tr>
+                <td>Name: </td>
+                <td><input type="text" id="mazeName" value="a" /></td>
+            </tr>
+            <tr>
+                <td>Rows: </td>
+                <td><input type="text" id="rows" value="8" /></td>
+            </tr>
+            <tr>
+                <td>Cols: </td>
+                <td><input type="text" id="cols" value="7"/></td>
+            </tr>
+        </table>
+        <input type="button" id="btnNewGame" value="Start new Game" />
 
         <br />
         <b>Search Algo: </b>
@@ -37,52 +52,7 @@
         <img id="player" src="/Resources/mario.jpg" style="display:none" />
         <img id="exit" src="/Resources/Spiral.jpg" style="display:none" />
         <canvas style="border:solid; border-color:purple;" id="mazeCanvas" tabindex="1" class="maze-board" width="800" height="800"></canvas>
-
-        <script>
-            $(document).ready(function () {
-                $("#newGameForm").load("NewGameForm.html");
-
-                var mazeData = [[0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1],
-                ['#', 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-                [0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1],
-                [0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1],
-                [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0],
-                [0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1],
-                [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0],
-                [0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1],
-                [0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1],
-                [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0],
-                [0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1],
-                [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0],
-                [1, 1, 0, '*', 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-                [0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]];
-
-                var startRow = 1;
-                var startCol = 0;
-                var exitRow = 9;
-                var exitCol = 3;
-
-                var playerImage = document.getElementById("player");
-                var exitImage = document.getElementById("exit");
-                var enabled = true;
-                var moveFunction = undefined;
-
-                $("#mazeCanvas").mazeBoard(
-                    mazeData, // the matrix containing the maze cells
-                    startRow,
-                    startCol, // initial position of the player
-                    exitRow,
-                    exitCol, // the exit position 
-                    playerImage, // player's icon (of type Image)
-                    exitImage,
-                    enabled,
-                    moveFunction
-                );
-            });
-
-            document.addEventListener("keydown", keydown, false);
-        </script>
     </div>
-    
+
 </body>
 </html>
