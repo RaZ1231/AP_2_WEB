@@ -7,7 +7,7 @@ var context;
 var cellWidth;
 var cellHeight;
 var maze;
-var mazeMatrix;
+//var mazeMatrix;
 var playerProp;
 var myCanvas;
 var exitR;
@@ -42,6 +42,18 @@ $(document).ready(function () {
             })
     });
 
+    // solve
+    $("#btnSolve").click(function () {
+        var request = {
+            Name: maze.Name,
+            Algo: $("#solveAlgo").val(),
+        }
+        $.getJSON("/Maze/solve" + "/" + request.Name + "/" + request.Algo)
+            .done(function (ans) {
+                $("#product").text(ans.Name + " : " + ans.Solution);
+            })
+    });
+
     (function ($) {
         $.fn.mazeBoard = function (
             mazeData,
@@ -53,10 +65,10 @@ $(document).ready(function () {
             moveFunction
         ) {
 
-            myCanvas = document.getElementById("mazeCanvas");
+            myCanvas = $(this)[0];//document.getElementById("mazeCanvas");
             context = myCanvas.getContext("2d");
-            var rows = maze.Rows;
-            var cols = maze.Cols;
+            var rows = mazeMatrix.length;//maze.Rows;
+            var cols = mazeMatrix[0].length;//maze.Cols;
             cellWidth = (myCanvas.width) / cols;
             cellHeight = (myCanvas.height) / rows;
             exitR = exitRow;
@@ -67,12 +79,24 @@ $(document).ready(function () {
             playerProp = new playerObj();
             playerProp.pRow = startRow;
             playerProp.pCol = startCol;
+            /*
+            mazeMatrix = [];
+            var arr = [];
 
-
+            for (var x = 0; x < maze.Rows; x++) {
+                for (var y = 0; y < maze.Cols; y++) {
+                    arr.push(mazeData.charAt(x * maze.Cols + y));
+                }
+                mazeMatrix.push(arr);
+                arr = [];
+            }
+            */
+            context.clearRect(0, 0, myCanvas.width, myCanvas.height);
 
             for (var i = 0; i < rows; i++) {
                 for (var j = 0; j < cols; j++) {
                     if (mazeMatrix[i][j] == 1) {
+                        context.fillStyle = "black";
                         context.fillRect(cellWidth * j, cellHeight * i, cellWidth, cellHeight);
                     }
                 }
@@ -88,10 +112,12 @@ $(document).ready(function () {
         };
     })(jQuery);
 
-    document.addEventListener("keydown", keydown, false);
+    document.addEventListener("keyup", keyUp, false);
 });
 
-function keydown(e) {
+function keyUp(e) {
+    maze.Cols = mazeMatrix.length;
+    maze.Rows = mazeMatrix[0].length;
     if (playerProp.pRow != exitR || playerProp.pCol != exitC) {
         context.fillStyle = "white";
         context.fillRect(playerProp.pCol * cellHeight, playerProp.pRow * cellWidth, cellWidth, cellHeight);
@@ -116,14 +142,14 @@ function keydown(e) {
             }
             break;
         case 39: // right
-            if (playerProp.pCol < maze[0].length - 1) {
+            if (playerProp.pCol < maze.Cols) {
                 if (mazeMatrix[playerProp.pRow][playerProp.pCol + 1] != 1) {
                     playerProp.pCol = playerProp.pCol + 1;
                 }
             }
             break;
         case 40: // down
-            if (playerProp.pRow < maze[0].length - 1) {
+            if (playerProp.pRow < maze.Rows) {
                 if (mazeMatrix[playerProp.pRow + 1][playerProp.pCol] != 1) {
                     playerProp.pRow = playerProp.pRow + 1;
                 }
@@ -204,3 +230,17 @@ function solveCallback(obj) {
 }
 
 
+var mazeMatrix = [[0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1],
+ ['#', 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+ [0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+ [0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1],
+ [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0],
+ [0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1],
+ [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0],
+ [0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1],
+ [0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1],
+ [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0],
+ [0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1],
+ [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0],
+ [1, 1, 0, '*', 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+ [0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]];

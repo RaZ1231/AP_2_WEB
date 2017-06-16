@@ -15,7 +15,7 @@
     <div id="menuBar"></div>
 
     <header style="font-family:Verdana">
-        <h2>0Single Player Game</h2><hr />
+        <h2>7Single Player Game</h2><hr />
         <button id="bla" value="solve" onclick="solve()" style="height:30px;" />
     </header>
 
@@ -46,6 +46,17 @@
         <form id="chooseAlgo" style="padding-left:80px;" action="">
             <input type="submit" value="Solve Game">
         </form>
+        <table>
+            <tr>
+                <td>Name: </td>
+                <td><input type="text" id="solveName" /></td>
+            </tr>
+            <tr>
+                <td>Algo: </td>
+                <td><input type="number" id="solveAlgo" /></td>
+            </tr>
+        </table>
+        <input type="button" id="btnSolve" value="Solve" />
     </div>
 
     <div id="maze" style="float:left; padding:30px" class="col-sm-8 form-horizontal">
