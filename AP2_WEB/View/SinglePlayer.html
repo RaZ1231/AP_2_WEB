@@ -8,61 +8,50 @@
             crossorigin="anonymous">
     </script>
     <script type="text/javascript" src="/Scripts/Maze.js"></script>
-    <script src="../Scripts/MenuLoader.js"></script>
 </head>
 
 <body>
     <div id="menuBar"></div>
 
     <header style="font-family:Verdana">
-        <h2>7Single Player Game</h2><hr />
-        <button id="bla" value="solve" onclick="solve()" style="height:30px;" />
+        <h2>Single Player Game</h2><hr />
     </header>
 
     <div style="display:inline-block; float:left; font-size:larger; font-family:Verdana;">
-        <p id="product" />
         <table>
             <tr>
                 <td>Name: </td>
-                <td><input type="text" id="mazeName" value="a" /></td>
+                <td><input type="text" id="mazeName" value="" /></td>
             </tr>
             <tr>
                 <td>Rows: </td>
-                <td><input type="text" id="rows" value="8" /></td>
+                <td><input type="text" id="rows" value="0" /></td>
             </tr>
             <tr>
                 <td>Cols: </td>
-                <td><input type="text" id="cols" value="7"/></td>
+                <td><input type="text" id="cols" value="0"/></td>
             </tr>
         </table>
+        <div></div>
         <input type="button" id="btnNewGame" value="Start new Game" />
 
-        <br />
-        <b>Search Algo: </b>
-        <select id="searchAlgo" form="chooseAlgo">
-            <option>BFS</option>
-            <option>DFS</option>
-        </select>
-        <form id="chooseAlgo" style="padding-left:80px;" action="">
-            <input type="submit" value="Solve Game">
-        </form>
-        <table>
-            <tr>
-                <td>Name: </td>
-                <td><input type="text" id="solveName" /></td>
-            </tr>
-            <tr>
-                <td>Algo: </td>
-                <td><input type="number" id="solveAlgo" /></td>
-            </tr>
-        </table>
-        <input type="button" id="btnSolve" value="Solve" />
+        <div style="padding-top:50px">
+            <b>Search Algo: </b>
+            <select id="solveAlgo">
+                <option>BFS</option>
+                <option>DFS</option>
+            </select>
+        </div>
+        <div style="padding-left:80px;">
+            <input type="button" id="btnSolve" value="Solve Game" />
+        </div>
+        <p id="winMessage"></p>
     </div>
 
     <div id="maze" style="float:left; padding:30px" class="col-sm-8 form-horizontal">
         <img id="player" src="/Resources/mario.jpg" style="display:none" />
         <img id="exit" src="/Resources/Spiral.jpg" style="display:none" />
-        <canvas style="border:solid; border-color:purple;" id="mazeCanvas" tabindex="1" class="maze-board" width="800" height="800"></canvas>
+        <canvas style="border:solid; border-color:purple;" id="mazeCanvas" tabindex="1" class="maze-board" width="600" height="600"></canvas>
     </div>
 
 </body>

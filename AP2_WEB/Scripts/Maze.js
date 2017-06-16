@@ -7,7 +7,7 @@ var context;
 var cellWidth;
 var cellHeight;
 var maze;
-//var mazeMatrix;
+var mazeMatrix;
 var playerProp;
 var myCanvas;
 var exitR;
@@ -16,9 +16,10 @@ var startR;
 var startC;
 
 $(document).ready(function () {
-
+    $("#menuBar").load("Menu.html");
     // generate
     $("#btnNewGame").click(function () {
+        document.getElementById("winMessage").innerHTML = " ";
         var genRequest = {
             Name: $("#mazeName").val(),
             Rows: $("#rows").val(),
@@ -27,7 +28,7 @@ $(document).ready(function () {
         $.getJSON("/Maze/generate" + "/" + genRequest.Name + "/" + genRequest.Rows + "/" + genRequest.Cols)
             .done(function (jsMaze) {
                 maze = jsMaze;
-                $("#product").text(maze.Name + " : " + maze.Maze);
+                //$("#product").text(maze.Name + " : " + maze.Maze);
                 $("#mazeCanvas").mazeBoard(
        maze.Maze, // the matrix containing the maze cells
        maze.Start.Row,
@@ -44,13 +45,15 @@ $(document).ready(function () {
 
     // solve
     $("#btnSolve").click(function () {
+        var a = $("#solveAlgo").val() == 0 ? 0 : 1;
         var request = {
             Name: maze.Name,
-            Algo: $("#solveAlgo").val(),
+            Algo: a//$("#solveAlgo").val(),
         }
         $.getJSON("/Maze/solve" + "/" + request.Name + "/" + request.Algo)
             .done(function (ans) {
-                $("#product").text(ans.Name + " : " + ans.Solution);
+                //$("#sol").text(ans.Name + " : " + ans.Solution);
+                solve(ans.Solution);
             })
     });
 
@@ -64,11 +67,11 @@ $(document).ready(function () {
             enabled,
             moveFunction
         ) {
-
-            myCanvas = $(this)[0];//document.getElementById("mazeCanvas");
+            
+            myCanvas = $(this)[0];
             context = myCanvas.getContext("2d");
-            var rows = mazeMatrix.length;//maze.Rows;
-            var cols = mazeMatrix[0].length;//maze.Cols;
+            var rows = maze.Rows;
+            var cols = maze.Cols;
             cellWidth = (myCanvas.width) / cols;
             cellHeight = (myCanvas.height) / rows;
             exitR = exitRow;
@@ -79,7 +82,7 @@ $(document).ready(function () {
             playerProp = new playerObj();
             playerProp.pRow = startRow;
             playerProp.pCol = startCol;
-            /*
+            
             mazeMatrix = [];
             var arr = [];
 
@@ -90,7 +93,7 @@ $(document).ready(function () {
                 mazeMatrix.push(arr);
                 arr = [];
             }
-            */
+            
             context.clearRect(0, 0, myCanvas.width, myCanvas.height);
 
             for (var i = 0; i < rows; i++) {
@@ -112,15 +115,13 @@ $(document).ready(function () {
         };
     })(jQuery);
 
-    document.addEventListener("keyup", keyUp, false);
+    $(document).on("keydown", keyDown);
 });
 
-function keyUp(e) {
-    maze.Cols = mazeMatrix.length;
-    maze.Rows = mazeMatrix[0].length;
+function keyDown(e) {
     if (playerProp.pRow != exitR || playerProp.pCol != exitC) {
         context.fillStyle = "white";
-        context.fillRect(playerProp.pCol * cellHeight, playerProp.pRow * cellWidth, cellWidth, cellHeight);
+        context.fillRect(playerProp.pCol * cellWidth, playerProp.pRow * cellHeight, cellWidth, cellHeight);
     } else {
         var exit = document.getElementById("exit");
         context.drawImage(exit, exitC * cellWidth, exitR * cellHeight, cellWidth, cellHeight);
@@ -142,7 +143,7 @@ function keyUp(e) {
             }
             break;
         case 39: // right
-            if (playerProp.pCol < maze.Cols) {
+            if (playerProp.pCol < maze.Cols - 1) {
                 if (mazeMatrix[playerProp.pRow][playerProp.pCol + 1] != 1) {
                     playerProp.pCol = playerProp.pCol + 1;
                 }
@@ -157,24 +158,22 @@ function keyUp(e) {
             break;
     }
 
-    context.drawImage(player, playerProp.pCol * cellHeight, playerProp.pRow * cellWidth, cellWidth, cellHeight);
+    context.drawImage(player, playerProp.pCol * cellWidth, playerProp.pRow * cellHeight, cellWidth, cellHeight);
 
     if (playerProp.pRow == exitR && playerProp.pCol == exitC) {
-        alert("Yay!");
+        document.getElementById("winMessage").innerHTML = "Congratulation!"
     }
 }
 
 function solve(solution) {
     context.fillStyle = "white";
-    context.fillRect(playerProp.pCol * cellHeight, playerProp.pRow * cellWidth, cellWidth, cellHeight);
+    context.fillRect(playerProp.pCol * cellWidth, playerProp.pRow * cellHeight, cellWidth, cellHeight);
     context.drawImage(player, startC * cellWidth, startR * cellHeight, cellWidth, cellHeight);
     playerProp.pCol = startC;
     playerProp.pRow = startR;
 
-    var sol = "11333333331";
-    solution = sol;
     var solveObj = { solution: solution, i: 0, intervalID: null };
-    solveObj.intervalID = setInterval(solveCallback, 1000, solveObj);
+    solveObj.intervalID = setInterval(solveCallback, 600, solveObj);
 }
 
 function solveCallback(obj) {
@@ -185,7 +184,7 @@ function solveCallback(obj) {
     }
     if (playerProp.pRow != exitR || playerProp.pCol != exitC) {
         context.fillStyle = "white";
-        context.fillRect(playerProp.pCol * cellHeight, playerProp.pRow * cellWidth, cellWidth, cellHeight);
+        context.fillRect(playerProp.pCol * cellWidth, playerProp.pRow * cellHeight, cellWidth, cellHeight);
     } else {
         var exit = document.getElementById("exit");
         context.drawImage(exit, exitC * cellWidth, exitR * cellHeight, cellWidth, cellHeight);
@@ -207,14 +206,14 @@ function solveCallback(obj) {
             }
             break;
         case '1': // right
-            if (playerProp.pCol < mazeMatrix[0].length - 1) {
+            if (playerProp.pCol < maze.Cols) {
                 if (mazeMatrix[playerProp.pRow][playerProp.pCol + 1] != 1) {
                     playerProp.pCol = playerProp.pCol + 1;
                 }
             }
             break;
         case '3': // down
-            if (playerProp.pRow < mazeMatrix[0].length) {
+            if (playerProp.pRow < maze.Rows) {
                 if (mazeMatrix[playerProp.pRow + 1][playerProp.pCol] != 1) {
                     playerProp.pRow = playerProp.pRow + 1;
                 }
@@ -222,25 +221,9 @@ function solveCallback(obj) {
             break;
     }
 
-    context.drawImage(player, playerProp.pCol * cellHeight, playerProp.pRow * cellWidth, cellWidth, cellHeight);
+    context.drawImage(player, playerProp.pCol * cellWidth, playerProp.pRow * cellHeight, cellWidth, cellHeight);
 
     if (playerProp.pRow == exitR && playerProp.pCol == exitC) {
-        alert("Yay!");
+        document.getElementById("winMessage").innerHTML = "Congratulation!"
     }
 }
-
-
-var mazeMatrix = [[0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1],
- ['#', 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
- [0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1],
- [0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1],
- [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0],
- [0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1],
- [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0],
- [0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1],
- [0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1],
- [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0],
- [0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1],
- [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0],
- [1, 1, 0, '*', 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
- [0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]];

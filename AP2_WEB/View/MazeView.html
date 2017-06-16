@@ -30,6 +30,7 @@
 
                 chat.client.broadcastMessage = function (json) {
                     $('#chat').append('<li><strong>Maze</strong>:&nbsp;&nbsp;' + json + '</li>');
+                    //first push is draw the maze and than change it to draw moves.
                 };
 
                 // Start
@@ -40,12 +41,13 @@
                             $("#prodCategory").val(),
                             $("#prodPrice").val()
                         );
+                        //waiting for other player.
                     });
 
                     // Join
                     $('#btnJoinMessage').click(function () {
                         chat.server.join(
-                            $("#prodName").val(),
+                            $("#prodName").val()
                         );
                         // Clear text box and reset focus for next comment
                         $('#message').val('').focus();
@@ -56,16 +58,17 @@
                         // Call the Send method on the hub
                         chat.server.move(
                             $("#prodName").val(),
-                            $("#txtMove").val(),
+                            $("#txtMove").val()
                         );
                         // Clear text box and reset focus for next comment
                         $('#txtMove').val('').focus();
                     });
                 });
 
-                var apiUrl = "/api/Maze/"; // base uri of requests
+                
 
                 // list
+                var apiUrl = "/api/Maze/"; // base uri of requests
                 $("#btnListMessage").click(function () {
                     $.getJSON(apiUrl).done(function (data) {
                         $("#lstProducts").empty();
