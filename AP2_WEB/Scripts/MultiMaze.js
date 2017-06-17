@@ -100,10 +100,74 @@ $(document).ready(function () {
         });
     });
 
+    (function ($) {
+        $.fn.mazeBoard = function (
+            mazeData,
+            startRow, startCol,
+            exitRow, exitCol,
+            playerImage,
+            exitImage,
+            enabled,
+            moveFunction
+        ) {
+
+            myCanvas = $(this)[0];
+            context = myCanvas.getContext("2d");
+            var rows = maze.Rows;
+            var cols = maze.Cols;
+            cellWidth = (myCanvas.width) / cols;
+            cellHeight = (myCanvas.height) / rows;
+            exitR = exitRow;
+            exitC = exitCol;
+            startR = startRow;
+            startC = startCol;
+
+            playerProp = new playerObj();
+            playerProp.pRow = startRow;
+            playerProp.pCol = startCol;
+
+            mazeMatrix = [];
+            var arr = [];
+
+            for (var x = 0; x < maze.Rows; x++) {
+                for (var y = 0; y < maze.Cols; y++) {
+                    arr.push(mazeData.charAt(x * maze.Cols + y));
+                }
+                mazeMatrix.push(arr);
+                arr = [];
+            }
+
+            context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+
+            for (var i = 0; i < rows; i++) {
+                for (var j = 0; j < cols; j++) {
+                    if (mazeMatrix[i][j] == 1) {
+                        context.fillStyle = "black";
+                        context.fillRect(cellWidth * j, cellHeight * i, cellWidth, cellHeight);
+                    }
+                }
+            }
+
+            var player = playerImage;
+            context.drawImage(player, startCol * cellWidth, startRow * cellHeight, cellWidth, cellHeight);
+
+            var exit = exitImage;
+            context.drawImage(exit, exitCol * cellWidth, exitRow * cellHeight, cellWidth, cellHeight);
+
+            myPlayerProp.pRow = startRow;
+            myPlayerProp.pCol = startCol;
+
+            opPlayerProp.pRow = startRow;
+            opPlayerProp.pCol = startCol;
+
+            return this;
+        };
+    })(jQuery);
+
     document.addEventListener("keydown", keydown, false);
 });
 
-
+/*
 (function ($) {
     $.fn.mazeBoard = function (
         mazeData,
@@ -149,4 +213,4 @@ $(document).ready(function () {
 
         return this;
     };
-})(jQuery);
+})(jQuery);*/
