@@ -15,27 +15,36 @@ namespace AP2_WEB.Controllers
 {
     public class MazeController : ApiController
     {
-        public static Dictionary<string, MazeGame> pending = new Dictionary<string, MazeGame>();
+        private static Dictionary<string, MazeGame> pending = new Dictionary<string, MazeGame>();
+        public static Dictionary<string, MazeGame> Pending { get => pending; set => pending = value; }
 
-        public static Dictionary<string, MazeGame> multi = new Dictionary<string, MazeGame>();
+        private static Dictionary<string, MazeGame> multi = new Dictionary<string, MazeGame>();
+        public static Dictionary<string, MazeGame> Multi { get => multi; set => multi = value; }
 
-        public static Dictionary<string, MazeGame> single = new Dictionary<string, MazeGame>();
+        private static Dictionary<string, MazeGame> single = new Dictionary<string, MazeGame>();
+        public static Dictionary<string, MazeGame> Single { get => single; set => single = value; }
+
 
         // list
         public IEnumerable<string> GetAllMazes()
         {
-            if (pending.Count == 0)
+            if (Pending.Count == 0)
             {
                 return new List<string>();
             }
 
-            return pending.Values.Select(game => game.Name);
+            return Pending.Values.Select(game => game.Name);
         }
 
         // join
         public JObject GetMaze(string id)
         {
-            Maze maze = pending.Values.FirstOrDefault(p => p.Maze.Name.Equals(id)).Maze;
+            Maze maze = Pending.Values.FirstOrDefault(p => p.Maze.Name.Equals(id)).Maze;
+
+            if(maze == null) // not found
+            {
+                return JObject.Parse("");
+            }
 
             return JObject.Parse(maze.ToJSON());
         }
@@ -48,11 +57,11 @@ namespace AP2_WEB.Controllers
 
             maze.Name = name;
 
-            single.Add(name, new MazeGame()
+            Single[name] = new MazeGame()
             {
                 Name = name,
                 Maze = maze
-            });
+            };
 
             return JObject.Parse(maze.ToJSON());
         }
@@ -61,13 +70,13 @@ namespace AP2_WEB.Controllers
         [Route("Maze/solve/{name}/{algo}")]
         public JObject Solve(string name, int algo)
         {
-            MazeGame game = multi.ContainsKey(name) ? multi[name] : single[name];
-            ISearcher<Position> searcher = algo == 0 ? (ISearcher<Position>) 
-                new BFS<Position, int>((s1, s2) => 1, (i, j) => i + j) : 
-                new DFS<Position>();
+            MazeGame game = Multi.ContainsKey(name) ? Multi[name] : Single[name];
 
             if (game.Solution == null)
             {
+                ISearcher<Position> searcher = algo == 0 ? (ISearcher<Position>) 
+                                    new BFS<Position, int>((s1, s2) => 1, (i, j) => i + j) : 
+                                    new DFS<Position>();
                 SearchableMaze smaze = new SearchableMaze(game.Maze);
                 game.Solution = MazeSolution.FromSolution(searcher.Search(smaze));
                 game.Solution.MazeName = name;
@@ -84,11 +93,11 @@ namespace AP2_WEB.Controllers
 
             maze.Name = name;
 
-            pending.Add(name, new MazeGame()
+            Pending[name] = new MazeGame()
             {
                 Name = name,
                 Maze = maze
-            });
+            };
 
             return JObject.Parse(maze.ToJSON());
         }

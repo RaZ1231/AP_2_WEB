@@ -33,8 +33,8 @@
                     //first push is draw the maze and than change it to draw moves.
                 };
 
-                // Start
                 $.connection.hub.start().done(function () {
+                    // Start
                     $('#btnSendMessage').click(function () {
                         chat.server.start(
                             $("#prodName").val(),
@@ -49,8 +49,6 @@
                         chat.server.join(
                             $("#prodName").val()
                         );
-                        // Clear text box and reset focus for next comment
-                        $('#message').val('').focus();
                     });
 
                     // Move
@@ -87,7 +85,7 @@
                     }
                     $.getJSON("/Maze/generate" + "/" + genRequest.Name + "/" + genRequest.Rows + "/" + genRequest.Cols)
                         .done(function (maze) {
-                            $("#product").text(maze.Name + " : " + maze.Maze);
+                            $('#chat').append('<li><strong>Generate</strong>:&nbsp;&nbsp;' + maze.Name + " : " + maze.Maze + '</li>');
                         })
                 });
 
@@ -95,11 +93,11 @@
                 $("#btnSolve").click(function () {
                     var request = {
                         Name: $("#solveName").val(),
-                        Algo: $("#solveAlgo").val(),
+                        Algo: $("#solveAlgo").val()
                     }
                     $.getJSON("/Maze/solve" + "/" + request.Name + "/" + request.Algo)
                         .done(function (ans) {
-                            $("#product").text(ans.Name + " : " + ans.Solution);
+                            $('#chat').append('<li><strong>Solve</strong>:&nbsp;&nbsp;' + ans.Name + " : " + ans.Solution + '</li>');
                         })
                 });
             });

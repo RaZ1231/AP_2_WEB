@@ -33,15 +33,15 @@ namespace AP2_WEB.SignalR
 
             game.Players.Add(Context.ConnectionId, maze.InitialPos);
 
-            MazeController.pending[name] = game;
+            MazeController.Pending[name] = game;
         }
 
         public void Join(string name)
         {
-            MazeGame game = MazeController.pending[name];
+            MazeGame game = MazeController.Pending[name];
 
-            MazeController.pending.Remove(name);
-            MazeController.multi[name] = game;
+            MazeController.Pending.Remove(name);
+            MazeController.Multi[name] = game;
 
             game.Players.Add(Context.ConnectionId, game.Maze.InitialPos);
 
@@ -52,7 +52,7 @@ namespace AP2_WEB.SignalR
 
         public void Move(string name, int direction)
         {
-            MazeGame game = MazeController.multi[name];
+            MazeGame game = MazeController.Multi[name];
 
             Move move = new Move()
             {
