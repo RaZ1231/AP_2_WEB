@@ -32,8 +32,8 @@
                     $('#chat').append('<li><strong>Maze</strong>:&nbsp;&nbsp;' + json + '</li>');
                 };
 
-                // Start
                 $.connection.hub.start().done(function () {
+                    // Start
                     $('#btnSendMessage').click(function () {
                         chat.server.start(
                             $("#prodName").val(),
@@ -45,10 +45,8 @@
                     // Join
                     $('#btnJoinMessage').click(function () {
                         chat.server.join(
-                            $("#prodName").val(),
+                            $("#prodName").val()
                         );
-                        // Clear text box and reset focus for next comment
-                        $('#message').val('').focus();
                     });
 
                     // Move
@@ -56,7 +54,7 @@
                         // Call the Send method on the hub
                         chat.server.move(
                             $("#prodName").val(),
-                            $("#txtMove").val(),
+                            $("#txtMove").val()
                         );
                         // Clear text box and reset focus for next comment
                         $('#txtMove').val('').focus();
@@ -84,7 +82,7 @@
                     }
                     $.getJSON("/Maze/generate" + "/" + genRequest.Name + "/" + genRequest.Rows + "/" + genRequest.Cols)
                         .done(function (maze) {
-                            $("#product").text(maze.Name + " : " + maze.Maze);
+                            $('#chat').append('<li><strong>Generate</strong>:&nbsp;&nbsp;' + maze.Name + " : " + maze.Maze + '</li>');
                         })
                 });
 
@@ -92,11 +90,11 @@
                 $("#btnSolve").click(function () {
                     var request = {
                         Name: $("#solveName").val(),
-                        Algo: $("#solveAlgo").val(),
+                        Algo: $("#solveAlgo").val()
                     }
                     $.getJSON("/Maze/solve" + "/" + request.Name + "/" + request.Algo)
                         .done(function (ans) {
-                            $("#product").text(ans.Name + " : " + ans.Solution);
+                            $('#chat').append('<li><strong>Solve</strong>:&nbsp;&nbsp;' + ans.Name + " : " + ans.Solution + '</li>');
                         })
                 });
             });

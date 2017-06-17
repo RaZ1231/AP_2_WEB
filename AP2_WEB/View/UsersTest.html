@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <script>
+        $(document).ready(function () {
+            var apiUrl = "/api/Users/";
+
+            // list
+            $("#btnList").click(function () {
+                $.getJSON(apiUrl).done(function (data) {
+                    $("#lstProducts").empty();
+                    data.forEach(function (user) {
+                        $("<li>" + "<b>" + user.Username + "</b> - "
+                            + user.Password + ", "
+                            + user.Email + ", "
+                            + user.JoinDate + ", "
+                            + user.Wins + ", "
+                            + user.Loses
+                            + "</li>").appendTo("#lstProducts");
+                    });
+                });
+            });
+
+            // register
+            $("#btnSubmit").click(function () {
+                var user = {
+                    Username: $("#inputUsername").val(),
+                    Password: $("#inputPassword").val(),
+                    Email: $("#inputEmail").val(),
+                    JoinDate: new Date(),
+                    Wins: 0,
+                    Loses: 0
+                }
+
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(user),
+                    success: function (result) {
+                        $("#txtAnswer").text("User added! click List btn to see changes");
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $("#txtAnswer").text("ERROR");
+                        switch (XMLHttpRequest.responseJSON) {
+                            case "Username":
+                                $("#txtAnswer").text("Username taken!");
+                                break;
+                            case "Email":
+                                $("#txtAnswer").text("Email taken!");
+                                break;
+                        }
+                    }  
+                });
+            });
+
+            // login
+            $("#btnLogin").click(function () {
+                var user = {
+                    Username: $("#txtUsername").val(),
+                    Password: $("#txtPassword").val()
+                }
+
+                $.ajax({
+                    url: apiUrl + 'login',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(user),
+                    success: function (result) {
+                        $("#txtLoginAnswer").text("Hello, " + user.Username);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $("#txtLoginAnswer").text("ERROR");
+                        switch (XMLHttpRequest.responseJSON) {
+                            case "Username":
+                                $("#txtLoginAnswer").text("Wrong Username!");
+                                break;
+                            case "Password":
+                                $("#txtLoginAnswer").text("Wrong Password!");
+                                break;
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <div class="container">
+        <h2>Users</h2>
+        <ul id="lstProducts"></ul>
+        <input type="button" id="btnList" value="List" />
+    </div>
+
+    <div class="panel-body">
+        <form class="form-horizontal" data-bind="submit: addUser">
+            <h2>Register</h2>
+            <div class="form-group" data-bind="with: newUser">
+                <label for="inputUsername" class="col-sm-2 control-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="text" id="inputUsername" value="test4" />
+                </div>
+                <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" id="inputPassword" value="1234" />
+                </div>
+                <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" id="inputEmail" value="test4@gmail.com" />
+                </div>
+            </div>
+            <input type="button" id="btnSubmit" value="Submit" />
+        </form>
+        <p id="txtAnswer" />
+    </div>
+
+    <div class="panel-body">
+        <form class="form-horizontal" data-bind="submit: addUser">
+            <h2>Login</h2>
+            <div class="form-group" data-bind="with: newUser">
+                <label for="inputUsername" class="col-sm-2 control-label">Username</label>
+                <div class="col-sm-10">
+                    <input type="text" id="txtUsername" value="test4" />
+                </div>
+                <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" id="txtPassword" value="1234" />
+                </div>
+            </div>
+            <input type="button" id="btnLogin" value="Login" />
+        </form>
+        <p id="txtLoginAnswer" />
+    </div>
+</body>
+</html>
