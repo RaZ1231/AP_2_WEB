@@ -31,38 +31,37 @@ $(document).ready(function () {
         chat = $.connection.gameHub;
 
         chat.client.broadcastMessage = function (json) {
-            //$('#chat').append('<li><strong>Maze</strong>:&nbsp;&nbsp;' + json + '</li>');
-            $("#waitingMsg").text(" ");
-            maze = JSON.parse(json);
-            $(document).title = maze.Name;
+            if (maze == undefined) {
+                $("#waitingMsg").text(" ");
+                maze = JSON.parse(json);
+                $(document).title = maze.Name;
 
-            $("#myMazeCanvas").mazeBoard(
-                maze.Maze, // the matrix containing the maze cells
-           maze.Start.Row,
-           maze.Start.Col, // initial position of the player
-           maze.End.Row,
-           maze.End.Col, // the exit position 
-           document.getElementById("player"), // player's icon (of type Image)
-           document.getElementById("exit"), // exit icon
-           true,
-           undefined
-            );
-            $("#opMazeCanvas").mazeBoard(
-                 maze.Maze, // the matrix containing the maze cells
-            maze.Start.Row,
-            maze.Start.Col, // initial position of the player
-            maze.End.Row,
-            maze.End.Col, // the exit position 
-            document.getElementById("player"), // player's icon (of type Image)
-            document.getElementById("exit"), // exit icon
-            true,
-            undefined
-             );
+                $("#myMazeCanvas").mazeBoard(
+                    maze.Maze, // the matrix containing the maze cells
+               maze.Start.Row,
+               maze.Start.Col, // initial position of the player
+               maze.End.Row,
+               maze.End.Col, // the exit position 
+               document.getElementById("player"), // player's icon (of type Image)
+               document.getElementById("exit"), // exit icon
+               true,
+               undefined
+                );
+                $("#opMazeCanvas").mazeBoard(
+                     maze.Maze, // the matrix containing the maze cells
+                maze.Start.Row,
+                maze.Start.Col, // initial position of the player
+                maze.End.Row,
+                maze.End.Col, // the exit position 
+                document.getElementById("player"), // player's icon (of type Image)
+                document.getElementById("exit"), // exit icon
+                true,
+                undefined
+                 );
+            } else {
+                alert("hoorey!");
+            }
 
-            chat.client.broadcastMessage = function (json) {
-                //var direction = JSON.parse(json);
-                alert("hey");
-            };
         };
 
         $.connection.hub.start().done(function () {
@@ -81,8 +80,7 @@ $(document).ready(function () {
                 chat.server.join(
                     $("#gamesList").val()
                 );
-                // Clear text box and reset focus for next comment
-                $('#message').val('').focus();
+                
             });
             /*
             // Move
@@ -197,7 +195,7 @@ function keyDown(e) {
                     playerProp.pCol = playerProp.pCol - 1;
                 }
             }
-            direction = "left";
+            direction = 0;
             break;
         case 38: //up
             if (playerProp.pRow > 0) {
@@ -205,7 +203,7 @@ function keyDown(e) {
                     playerProp.pRow = playerProp.pRow - 1;
                 }
             }
-            direction = "up";
+            direction = 2;
             break;
         case 39: // right
             if (playerProp.pCol < maze.Cols - 1) {
@@ -213,7 +211,7 @@ function keyDown(e) {
                     playerProp.pCol = playerProp.pCol + 1;
                 }
             }
-            direction = "right";
+            direction = 1;
             break;
         case 40: // down
             if (playerProp.pRow < maze.Rows - 1) {
@@ -221,7 +219,7 @@ function keyDown(e) {
                     playerProp.pRow = playerProp.pRow + 1;
                 }
             }
-            direction = "down";
+            direction = 3;
             break;
     }
 
