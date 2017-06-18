@@ -7,26 +7,59 @@
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous">
     </script>
-    <script src="../Scripts/MenuLoader.js"></script>
+    <script src="../Scripts/Register.js"></script>
 </head>
 <body>
-    <header>
         <div id="menuBar"></div>
 
-        <script>
-            $(document).ready(function () {
-                $("#registerForm").load("RegisterForm.html");
-            });
-        </script>
-    </header>
-
-    <article style="padding-left:200px; font-family:Verdana">
+    <div style="padding-left:200px; font-family:Verdana">
         <div>
             <h1>Register</h1>
             <p>Create a local account to play On-line.</p>
         </div>
 
-        <div id="registerForm" style="font-size:large"></div>
-    </article>
+        <table style="font-family:Verdana; padding:50px" cellspacing="15">
+            <tbody>
+                <tr>
+                    <td>
+                        <b>Username: </b>
+                    </td>
+                    <td>
+                        <input type="text" name="username" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Password: </b>
+                    </td>
+                    <td>
+                        <input type="text" name="password">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Password Again: </b>
+                    </td>
+                    <td>
+                        <input type="text" name="passwordAgain">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Email Address: </b>
+                    </td>
+                    <td>
+                        <input type="text" name="email">
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Register">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

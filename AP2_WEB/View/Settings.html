@@ -7,12 +7,36 @@
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous">
     </script>
-    <script src="../Scripts/MenuLoader.js"></script>
+    <script src="../Scripts/Settings.js"></script>
 </head>
 <body>
     <div id="menuBar"></div>
 
+    <div style="padding-left:200px; font-family:Verdana">
+        <div>
+            <h1>Settings</h1>
+        </div>
 
-
+        <table style="font-family:Verdana;" cellspacing="15">
+            <tbody>
+                <tr>
+                    <td>Rows: </td>
+                    <td><input type="text" id="rows"/></td>
+                </tr>
+                <tr>
+                    <td>Cols: </td>
+                    <td><input type="text" id="cols"/></td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="padding-top:50px">
+            <b>Search Algo: </b>
+            <select id="solveAlgo">
+                <option>BFS</option>
+                <option>DFS</option>
+            </select>
+        </div>
+        <input type="button" id="btnSave" value="Save Settings" />
+    </div>
 </body>
 </html>

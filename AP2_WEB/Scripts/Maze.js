@@ -16,7 +16,15 @@ var startR;
 var startC;
 
 $(document).ready(function () {
-    $("#menuBar").load("Menu.html");
+    if (localStorage.getItem("username") === null) { // no one connected
+        $("#menuBar").load("Menu.html");
+    } else {
+        $("#menuBar").load("ConnectedMenu.html");
+    }
+    $("#rows").val(localStorage.getItem("defaultRows"));
+    $("#cols").val(localStorage.getItem("defaultCols"));
+    $("#solveAlgo").val(localStorage.getItem("defaultSearch"));
+
     // generate
     $("#btnNewGame").click(function () {
         document.getElementById("winMessage").innerHTML = " ";

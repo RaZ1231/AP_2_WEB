@@ -7,26 +7,45 @@
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous">
     </script>
-    <script src="../Scripts/MenuLoader.js"></script>
+    <script src="../Scripts/Login.js"></script>
 </head>
 <body>
-    <header>
-        <div id="menuBar"></div>
+    <div id="menuBar"></div>
 
-        <script>
-            $(document).ready(function () {
-                $("#loginForm").load("LoginForm.html");
-            });
-        </script>
-    </header>
-
-    <article style="padding-left:200px; font-family:Verdana">
+    <div style="padding-left:200px; font-family:Verdana">
         <div>
             <h1>Log in</h1>
             <p>Use a local account to log in.</p>
         </div>
 
-        <div id="loginForm" style="font-size:large"></div>
-    </article>
+        <table style="font-family:Verdana; padding:50px" cellspacing="15">
+            <tbody>
+                <tr>
+                    <td>
+                        <b>Username: </b>
+                    </td>
+                    <td>
+                        <input type="text" name="username" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Password: </b>
+                    </td>
+                    <td>
+                        <input type="text" name="password">
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Login">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div><a href="Register.html">Register as a new user</a></div>
+    </div>
 </body>
 </html>

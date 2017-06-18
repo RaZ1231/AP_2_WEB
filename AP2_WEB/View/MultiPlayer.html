@@ -16,53 +16,54 @@
     <div id="menuBar"></div>
 
     <header style="font-family:Verdana">
-        <h2>4Multi Player Game</h2><hr />
+        <h2>Multi Player Game</h2><hr />
     </header>
 
+    <div id="multiPlayer">
+        <div style="display:inline-block; float:left; font-size:larger; font-family:Verdana;">
+            <b>Games: </b>
+            <select id="gamesList"></select>
 
-    <div style="display:inline-block; float:left; font-size:larger; font-family:Verdana;">
-        <b>Games: </b>
-        <select id="gamesList"></select>
+            <div style="padding-left:80px;">
+                <input type="button" id="btnJoinMessage" value="Join" />
+            </div>
 
-        <div style="padding-left:80px;">
-            <input type="button" id="btnJoinMessage" value="Join" />
+            <table>
+                <tr>
+                    <td>Name: </td>
+                    <td><input type="text" id="mazeName" value="" /></td>
+                </tr>
+                <tr>
+                    <td>Rows: </td>
+                    <td><input type="text" id="rows" value="0" /></td>
+                </tr>
+                <tr>
+                    <td>Cols: </td>
+                    <td><input type="text" id="cols" value="0" /></td>
+                </tr>
+            </table>
+
+            <input type="button" id="btnNewGame" value="Start New Game" />
+
+            <p id="waitingMsg" style="padding-top:50px"></p>
+
         </div>
 
-        <table>
-            <tr>
-                <td>Name: </td>
-                <td><input type="text" id="mazeName" value="" /></td>
-            </tr>
-            <tr>
-                <td>Rows: </td>
-                <td><input type="text" id="rows" value="0" /></td>
-            </tr>
-            <tr>
-                <td>Cols: </td>
-                <td><input type="text" id="cols" value="0" /></td>
-            </tr>
-        </table>
+        <div id="maze" style="float:left; padding:30px; font-family:Verdana;" class="col-sm-8 form-horizontal">
+            <img id="player" src="/Resources/mario.jpg" style="display:none" />
+            <img id="exit" src="/Resources/Spiral.jpg" style="display:none" />
+            <div style="display:inline-block;">
+                My Board
+                <br />
+                <canvas style="border:solid; border-color:purple;" id="myMazeCanvas" tabindex="1" class="maze-board" width="500" height="500"></canvas>
+            </div>
 
-        <input type="button" id="btnNewGame" value="Start New Game" />
+            <div style="float:right; padding-left:50px">
+                Opponent Board<br />
+                <canvas style="border:solid; border-color:red;" id="opMazeCanvas" tabindex="1" class="maze-board" width="500" height="500"></canvas>
+            </div>
 
-        <p id="waitingMsg" style="padding-top:50px"></p>
-
-    </div>
-
-    <div id="maze" style="float:left; padding:30px; font-family:Verdana;" class="col-sm-8 form-horizontal">
-        <img id="player" src="/Resources/mario.jpg" style="display:none" />
-        <img id="exit" src="/Resources/Spiral.jpg" style="display:none" />
-        <div style="display:inline-block;">
-            My Board
-            <br />
-            <canvas style="border:solid; border-color:purple;" id="myMazeCanvas" tabindex="1" class="maze-board" width="500" height="500"></canvas>
         </div>
-
-        <div style="float:right; padding-left:50px">
-            Opponent Board<br />
-            <canvas style="border:solid; border-color:red;" id="opMazeCanvas" tabindex="1" class="maze-board" width="500" height="500"></canvas>
-        </div>
-
     </div>
 </body>
 </html>
