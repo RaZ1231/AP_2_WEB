@@ -150,6 +150,44 @@ namespace AP2_WEB.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [ResponseType(typeof(void))]
+        [Route("api/Users/win")]
+        public async Task<IHttpActionResult> Win(User user)
+        {
+            User found = await db.Users.FindAsync(user.Username);
+
+            if (found == null)
+            {
+                return Content(HttpStatusCode.BadRequest, "Username");
+            }
+
+            db.Entry(found).Entity.Wins += 1;
+            db.Entry(found).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [ResponseType(typeof(void))]
+        [Route("api/Users/lose")]
+        public async Task<IHttpActionResult> Lose(User user)
+        {
+            User found = await db.Users.FindAsync(user.Username);
+
+            if (found == null)
+            {
+                return Content(HttpStatusCode.BadRequest, "Username");
+            }
+
+            db.Entry(found).Entity.Wins -= 1;
+            db.Entry(found).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+
+            return Ok();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
