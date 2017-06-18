@@ -158,10 +158,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\AP2_WEBContext-20170616235604.mdf" />
-    <Content Include="App_Data\AP2_WEBContext-20170616235604_log.ldf">
-      <DependentUpon>AP2_WEBContext-20170616235604.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -251,17 +247,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201706162102520_Initial.cs" />
-    <Compile Include="Migrations\201706162102520_Initial.Designer.cs">
-      <DependentUpon>201706162102520_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706162108073_Initial1.cs" />
-    <Compile Include="Migrations\201706162108073_Initial1.Designer.cs">
-      <DependentUpon>201706162108073_Initial1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706162125530_Initial2.cs" />
-    <Compile Include="Migrations\201706162125530_Initial2.Designer.cs">
-      <DependentUpon>201706162125530_Initial2.cs</DependentUpon>
+    <Compile Include="Migrations\201706182137550_Initial.cs" />
+    <Compile Include="Migrations\201706182137550_Initial.Designer.cs">
+      <DependentUpon>201706182137550_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AP2_WEBContext.cs" />
@@ -296,18 +284,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Views\Maze\" />
     <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706162102520_Initial.resx">
-      <DependentUpon>201706162102520_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706162108073_Initial1.resx">
-      <DependentUpon>201706162108073_Initial1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706162125530_Initial2.resx">
-      <DependentUpon>201706162125530_Initial2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706182137550_Initial.resx">
+      <DependentUpon>201706182137550_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -325,7 +308,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64345</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
