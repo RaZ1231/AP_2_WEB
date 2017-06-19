@@ -13,16 +13,31 @@ using AP2_WEB.Models;
 
 namespace AP2_WEB.Controllers
 {
+    /// <summary>
+    /// user control represnting class.
+    /// </summary>
     public class UsersController : ApiController
     {
+        /// <summary>
+        /// private member of database.
+        /// </summary>
         private AP2_WEBContext db = new AP2_WEBContext();
 
+        /// <summary>
+        /// get user request.
+        /// </summary>
+        /// <returns>an action task</returns>
         // GET: api/Users
         public IQueryable<User> GetUsers()
         {
             return db.Users.OrderByDescending(user => user.Wins - user.Loses);
         }
 
+        /// <summary>
+        /// get user request.
+        /// </summary>
+        /// <param name="id">a user id</param>
+        /// <returns>an action task</returns>
         // GET: api/Users/5
         [ResponseType(typeof(User))]
         public async Task<IHttpActionResult> GetUser(string id)
@@ -36,6 +51,12 @@ namespace AP2_WEB.Controllers
             return Ok(user);
         }
 
+        /// <summary>
+        /// user put request.
+        /// </summary>
+        /// <param name="id">a user id</param>
+        /// <param name="user">a user</param>
+        /// <returns>an action task</returns>
         // PUT: api/Users/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutUser(string id, User user)
@@ -71,6 +92,11 @@ namespace AP2_WEB.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        /// <summary>
+        /// user post request.
+        /// </summary>
+        /// <param name="user">a user to send.</param>
+        /// <returns>an action task</returns>
         // POST: api/Users
         [ResponseType(typeof(User))]
         public async Task<IHttpActionResult> PostUser(User user)
@@ -112,6 +138,11 @@ namespace AP2_WEB.Controllers
             return CreatedAtRoute("DefaultApi", new { id = user.Username }, user);
         }
 
+        /// <summary>
+        /// delete user post request.
+        /// </summary>
+        /// <param name="id">a user to delete</param>
+        /// <returns>an action task</returns>
         // DELETE: api/Users/5
         [ResponseType(typeof(User))]
         public async Task<IHttpActionResult> DeleteUser(string id)
@@ -128,6 +159,11 @@ namespace AP2_WEB.Controllers
             return Ok(user);
         }
 
+        /// <summary>
+        /// login post request.
+        /// </summary>
+        /// <param name="user">login user.</param>
+        /// <returns>an action task</returns>
         [HttpPost]
         [ResponseType(typeof(void))]
         [Route("api/Users/login")]
@@ -150,6 +186,11 @@ namespace AP2_WEB.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// win post request.
+        /// </summary>
+        /// <param name="user">a winning user.</param>
+        /// <returns>an action task</returns>
         [HttpPost]
         [ResponseType(typeof(void))]
         [Route("api/Users/win")]
@@ -169,6 +210,11 @@ namespace AP2_WEB.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// lose post request.
+        /// </summary>
+        /// <param name="user">a losing user.</param>
+        /// <returns>an action task</returns>
         [HttpPost]
         [ResponseType(typeof(void))]
         [Route("api/Users/lose")]
@@ -188,6 +234,10 @@ namespace AP2_WEB.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// disposing the database.
+        /// </summary>
+        /// <param name="disposing">a boolean</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -197,6 +247,11 @@ namespace AP2_WEB.Controllers
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// returns whether a user exists in database.
+        /// </summary>
+        /// <param name="id">a user id</param>
+        /// <returns>whether a user exists in database.</returns>
         private bool UserExists(string id)
         {
             return db.Users.Count(e => e.Username == id) > 0;

@@ -8,6 +8,9 @@ using System.Web;
 
 namespace AP2_WEB.Models
 {
+    /// <summary>
+    /// maze game representing class.
+    /// </summary>
     public class MazeGame
     {
         /// <summary>
