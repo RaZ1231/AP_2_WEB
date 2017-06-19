@@ -70,7 +70,7 @@ $(document).ready(function () {
         $.connection.hub.start().done(function () {
             // Start
             $('#btnNewGame').click(function () {
-                if (genRequest.Name != "" && genRequest.Rows > 0 && genRequest.Cols > 0) {
+                if ($("#mazeName").val() != "" && $("#rows").val() > 0 && $("#cols").val() > 0) {
                     first = true;
                     document.getElementById("loader").style.display = "block";
                     chat.server.start(

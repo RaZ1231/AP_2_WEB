@@ -9,7 +9,7 @@
 
 // when page start.
 $(document).ready(function () {
-    if (localStorage.getItem("username") === null) { // no one connected
+    if (sessionStorage.getItem("username") === null) { // no one connected
         $("#menuBar").load("Menu.html");
     } else { // user connected
         $("#menuBar").load("ConnectedMenu.html");
