@@ -158,6 +158,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\AP2_WEBContext-20170616235604.mdf" />
+    <Content Include="App_Data\AP2_WEBContext-20170616235604_log.ldf">
+      <DependentUpon>AP2_WEBContext-20170616235604.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -284,7 +288,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Maze\" />
     <Folder Include="Views\Product\" />
   </ItemGroup>
