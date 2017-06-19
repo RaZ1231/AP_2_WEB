@@ -1,4 +1,13 @@
-﻿// when page start.
+﻿function stripes() {
+    $("tr").each(function () {
+        $(this).removeClass("striped").addClass(;
+    });
+    $("tr:even").each(function () {
+        $(this).addClass("striped");
+    });
+}
+
+// when page start.
 $(document).ready(function () {
     if (localStorage.getItem("username") === null) { // no one connected
         $("#menuBar").load("Menu.html");
@@ -14,11 +23,13 @@ $(document).ready(function () {
             var tr = document.createElement('TR');
             
             var td = document.createElement('TD');
-            td.appendChild(document.createTextNode("<b>" + i + "</b>"));
+            var b = document.createElement("b");
+            td.appendChild(document.createTextNode(i));
+            b.appendChild(td);
             tr.appendChild(td);
 
             td = document.createElement('TD');
-            td.appendChild(document.createTextNode(user.Username + "</br>" + user.JoinDate));
+            td.appendChild(document.createTextNode(user.Username)); //+ "</br>" + user.JoinDate));
             tr.appendChild(td);
 
             td = document.createElement('TD');
@@ -29,7 +40,7 @@ $(document).ready(function () {
             td.appendChild(document.createTextNode(user.Loses));
             tr.appendChild(td);
 
-            document.getElementById("rankingTable").appendChild(tr);
+            $("#rankingTable").append(tr);
             i = i + 1;
 
 /*
@@ -58,6 +69,7 @@ $(document).ready(function () {
                 + "</li>").appendTo("#lstProducts");
         });*/
         });
+        stripes();
 
     });
 });
