@@ -6,8 +6,12 @@ using System.Web;
 
 namespace AP2_WEB.Models
 {
+    /// <summary>
+    /// user represnting class.
+    /// </summary>
     public class User
     {
+        //user details.
         [Key]
         [Required]
         public string Username { get; set; }

@@ -8,6 +8,9 @@ using System.Web.Mvc;
 
 namespace AP2_WEB.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ProductController : ApiController
     {
         private static List<Product> products = new List<Product>

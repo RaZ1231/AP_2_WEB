@@ -16,7 +16,7 @@ var startR;
 var startC;
 
 $(document).ready(function () {
-    if (localStorage.getItem("username") === null) { // no one connected
+    if (sessionStorage.getItem("username") === null) { // no one connected
         $("#menuBar").load("Menu.html");
     } else {
         $("#menuBar").load("ConnectedMenu.html");
@@ -33,22 +33,25 @@ $(document).ready(function () {
             Rows: $("#rows").val(),
             Cols: $("#cols").val()
         }
-        $.getJSON("/Maze/generate" + "/" + genRequest.Name + "/" + genRequest.Rows + "/" + genRequest.Cols)
-            .done(function (jsMaze) {
-                maze = jsMaze;
-                //$("#product").text(maze.Name + " : " + maze.Maze);
-                $("#mazeCanvas").mazeBoard(
-       maze.Maze, // the matrix containing the maze cells
-       maze.Start.Row,
-       maze.Start.Col, // initial position of the player
-       maze.End.Row,
-       maze.End.Col, // the exit position 
-       document.getElementById("player"), // player's icon (of type Image)
-       document.getElementById("exit"), // exit icon
-       true,
-       undefined
-        );
-            })
+        if (genRequest.Name != "" && genRequest.Rows > 0 && genRequest.Cols > 0) {
+            document.getElementById("loader").style.display = "block";
+            $.getJSON("/Maze/generate" + "/" + genRequest.Name + "/" + genRequest.Rows + "/" + genRequest.Cols)
+                .done(function (jsMaze) {
+                    maze = jsMaze;
+                    window.document.title = maze.Name;
+                    $("#mazeCanvas").mazeBoard(
+           maze.Maze, // the matrix containing the maze cells
+           maze.Start.Row,
+           maze.Start.Col, // initial position of the player
+           maze.End.Row,
+           maze.End.Col, // the exit position 
+           document.getElementById("player"), // player's icon (of type Image)
+           document.getElementById("exit"), // exit icon
+           true,
+           undefined
+            );
+                })
+        }
     });
 
     // solve
@@ -75,7 +78,7 @@ $(document).ready(function () {
             enabled,
             moveFunction
         ) {
-            
+
             myCanvas = $(this)[0];
             context = myCanvas.getContext("2d");
             var rows = maze.Rows;
@@ -85,12 +88,12 @@ $(document).ready(function () {
             exitR = exitRow;
             exitC = exitCol;
             startR = startRow;
-            startC = startCol;      
+            startC = startCol;
 
             playerProp = new playerObj();
             playerProp.pRow = startRow;
             playerProp.pCol = startCol;
-            
+
             mazeMatrix = [];
             var arr = [];
 
@@ -101,7 +104,7 @@ $(document).ready(function () {
                 mazeMatrix.push(arr);
                 arr = [];
             }
-            
+
             context.clearRect(0, 0, myCanvas.width, myCanvas.height);
 
             for (var i = 0; i < rows; i++) {
@@ -118,6 +121,8 @@ $(document).ready(function () {
 
             var exit = exitImage;
             context.drawImage(exit, exitCol * cellWidth, exitRow * cellHeight, cellWidth, cellHeight);
+
+            document.getElementById("loader").style.display = "none";
 
             return this;
         };
@@ -163,6 +168,8 @@ function keyDown(e) {
                     playerProp.pRow = playerProp.pRow + 1;
                 }
             }
+            break;
+        default:
             break;
     }
 

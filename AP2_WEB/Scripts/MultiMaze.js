@@ -13,17 +13,18 @@ var exitC;
 var startR;
 var startC;
 var chat;
+var start = true;
 
 var myPlayerProp = new playerObj();
 
 var opPlayerProp = new playerObj();
 
 $(document).ready(function () {
-   // if (localStorage.getItem("username") === null) { // no one is connected.
+    if (sessionStorage.getItem("username") === null) { // no one is connected.
         $("#menuBar").load("Menu.html");
-   //     $("#multiPlayer").load("NoUserConnected.html")
-   // } else {
-        //$("#menuBar").load("ConnectedMenu.html");
+        $("#multiPlayer").load("NoUserConnected.html")
+    } else {
+        $("#menuBar").load("ConnectedMenu.html");
         $("#rows").val(localStorage.getItem("defaultRows"));
         $("#cols").val(localStorage.getItem("defaultCols"));
 
@@ -31,7 +32,8 @@ $(document).ready(function () {
         chat = $.connection.gameHub;
 
         chat.client.broadcastMessage = function (json) {
-            if (maze == undefined) {
+            if (first) {
+                first = false;
                 $("#waitingMsg").text(" ");
                 maze = JSON.parse(json);
                 $(document).title = maze.Name;
@@ -45,7 +47,7 @@ $(document).ready(function () {
                document.getElementById("player"), // player's icon (of type Image)
                document.getElementById("exit"), // exit icon
                true,
-               undefined
+               keyDown
                 );
                 $("#opMazeCanvas").mazeBoard(
                      maze.Maze, // the matrix containing the maze cells
@@ -56,10 +58,11 @@ $(document).ready(function () {
                 document.getElementById("player"), // player's icon (of type Image)
                 document.getElementById("exit"), // exit icon
                 true,
-                undefined
+                keyDown
                  );
+                window.document.title = maze.Name;
             } else {
-                alert("hoorey!");
+                move(json);
             }
 
         };
@@ -67,32 +70,26 @@ $(document).ready(function () {
         $.connection.hub.start().done(function () {
             // Start
             $('#btnNewGame').click(function () {
-                chat.server.start(
-                    $("#mazeName").val(),
-                    $("#rows").val(),
-                    $("#cols").val()
-                );
-                $("#waitingMsg").text("Waiting for another player...");
+                if (genRequest.Name != "" && genRequest.Rows > 0 && genRequest.Cols > 0) {
+                    first = true;
+                    document.getElementById("loader").style.display = "block";
+                    chat.server.start(
+                        $("#mazeName").val(),
+                        $("#rows").val(),
+                        $("#cols").val()
+                    );
+                    $("#waitingMsg").text("Waiting for another player...");
+                }
             });
 
             // Join
             $('#btnJoinMessage').click(function () {
+                first = true;
                 chat.server.join(
                     $("#gamesList").val()
                 );
-                
+
             });
-            /*
-            // Move
-            $('#btnMoveMessage').click(function () {
-                // Call the Send method on the hub
-                chat.server.move(
-                    $("#prodName").val(),
-                    $("#txtMove").val()
-                );
-                // Clear text box and reset focus for next comment
-                $('#txtMove').val('').focus();
-            });*/
         });
 
 
@@ -168,12 +165,15 @@ $(document).ready(function () {
                 opPlayerProp.pRow = startRow;
                 opPlayerProp.pCol = startCol;
 
+                if (myCanvas === document.getElementById("opMazeCanvas")) {
+                    document.getElementById("loader").style.display = "none";
+                }
                 return this;
             };
         })(jQuery);
 
         $(document).on("keydown", keyDown);
-    //}
+    }
 });
 
 function keyDown(e) {
@@ -221,6 +221,8 @@ function keyDown(e) {
             }
             direction = 3;
             break;
+        default:
+            break;
     }
 
     context.drawImage(player, playerProp.pCol * cellWidth, playerProp.pRow * cellHeight, cellWidth, cellHeight);
@@ -232,18 +234,18 @@ function keyDown(e) {
             mName,
             direction
         );
-    alert("sent");
 
     if (playerProp.pRow == exitR && playerProp.pCol == exitC) {
-        // tell the other?
+        // update database that win and stop the other player.
     }
 }
 
 function move(json) {
-    var move = JSON.parse(json);
-    var direction = move.Direction;
+    var moveObj = JSON.parse(json);
+    var direction = moveObj.Direction;
     var playerProp = opPlayerProp;
-    var context = document.getElementById("opMazeCanvas").getContext("2d");
+    var canvas = document.getElementById("opMazeCanvas");
+    var context = canvas.getContext("2d");
     if (playerProp.pRow != exitR || playerProp.pCol != exitC) {
         context.fillStyle = "white";
         context.fillRect(playerProp.pCol * cellWidth, playerProp.pRow * cellHeight, cellWidth, cellHeight);
@@ -253,28 +255,28 @@ function move(json) {
     }
 
     switch (direction) {
-        case "left": // left
+        case "Left": // left
             if (playerProp.pCol > 0) {
                 if (mazeMatrix[playerProp.pRow][playerProp.pCol - 1] != 1) {
                     playerProp.pCol = playerProp.pCol - 1;
                 }
             }
             break;
-        case "up": //up
+        case "Up": //up
             if (playerProp.pRow > 0) {
                 if (mazeMatrix[playerProp.pRow - 1][playerProp.pCol] != 1) {
                     playerProp.pRow = playerProp.pRow - 1;
                 }
             }
             break;
-        case "right": // right
+        case "Right": // right
             if (playerProp.pCol < maze.Cols - 1) {
                 if (mazeMatrix[playerProp.pRow][playerProp.pCol + 1] != 1) {
                     playerProp.pCol = playerProp.pCol + 1;
                 }
             }
             break;
-        case "down": // down
+        case "Down": // down
             if (playerProp.pRow < maze.Rows - 1) {
                 if (mazeMatrix[playerProp.pRow + 1][playerProp.pCol] != 1) {
                     playerProp.pRow = playerProp.pRow + 1;
@@ -286,6 +288,6 @@ function move(json) {
     context.drawImage(player, playerProp.pCol * cellWidth, playerProp.pRow * cellHeight, cellWidth, cellHeight);
 
     if (playerProp.pRow == exitR && playerProp.pCol == exitC) {
-        // tell the other?
+        // update database that win and stop the my player.
     }
 }

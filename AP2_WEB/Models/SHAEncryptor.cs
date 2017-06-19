@@ -7,8 +7,16 @@ using System.Web;
 
 namespace AP2_WEB.Models
 {
+    /// <summary>
+    /// encrypting class represnting.
+    /// </summary>
     public class SHAEncryptor
     {
+        /// <summary>
+        /// computing hash function.
+        /// </summary>
+        /// <param name="input">a string to encrypt</param>
+        /// <returns>returns encrypted string.</returns>
         public static string ComputeHash(string input)
         {
             SHA1 sha = SHA1.Create();

@@ -11,14 +11,28 @@ using System.Web;
 
 namespace AP2_WEB.SignalR
 {
+    /// <summary>
+    /// game hub representing class.
+    /// </summary>
     public class GameHub : Hub
     {
+        /// <summary>
+        /// send message.
+        /// </summary>
+        /// <param name="name">a name</param>
+        /// <param name="message">a message</param>
         public void Send(string name, string message)
         {
             // Call the broadcastMessage method to update clients
             Clients.All.broadcastMessage(name, message);
         }
 
+        /// <summary>
+        /// start game
+        /// </summary>
+        /// <param name="name">maze name</param>
+        /// <param name="rows">maze rows</param>
+        /// <param name="cols">maze cols</param>
         public void Start(string name, int rows, int cols)
         {
             Maze maze = new DFSMazeGenerator().Generate(rows, cols);
@@ -36,6 +50,10 @@ namespace AP2_WEB.SignalR
             MazeController.Pending[name] = game;
         }
 
+        /// <summary>
+        /// join game
+        /// </summary>
+        /// <param name="name">a name</param>
         public void Join(string name)
         {
             MazeGame game = MazeController.Pending[name];
@@ -50,6 +68,11 @@ namespace AP2_WEB.SignalR
             game.Players.Keys.ToList().ForEach(id => Clients.Client(id).broadcastMessage(json));
         }
 
+        /// <summary>
+        /// move in game
+        /// </summary>
+        /// <param name="name">a name</param>
+        /// <param name="direction">a direction</param>
         public void Move(string name, int direction)
         {
             MazeGame game = MazeController.Multi[name];
