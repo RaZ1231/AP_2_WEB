@@ -1,6 +1,6 @@
 ﻿function stripes() {
     $("tr").each(function () {
-        $(this).removeClass("striped").addClass(;
+        $(this).removeClass("striped");
     });
     $("tr:even").each(function () {
         $(this).addClass("striped");

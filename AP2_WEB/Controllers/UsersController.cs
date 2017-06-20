@@ -227,7 +227,7 @@ namespace AP2_WEB.Controllers
                 return Content(HttpStatusCode.BadRequest, "Username");
             }
 
-            db.Entry(found).Entity.Wins -= 1;
+            db.Entry(found).Entity.Loses += 1;
             db.Entry(found).State = EntityState.Modified;
             await db.SaveChangesAsync();
 

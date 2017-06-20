@@ -8,7 +8,29 @@
     var apiUrl = "/api/Users/";
 
     // register
-    $("#btnSubmit").click(function () {
+    $("#btnRegister").click(function () {
+        if ($("#inputUsername").val() == "") {
+            $("#txtAnswer").text("Please fill in username");
+            return;
+        }
+        if ($("#inputPassword").val() == "") {
+            $("#txtAnswer").text("Please fill in password");
+            return;
+        }
+        if ($("#inputPasswordAgain").val() == "") {
+            $("#txtAnswer").text("Please fill in password again");
+            return;
+        }
+        if ($("#inputEmail").val() == "") {
+            $("#txtAnswer").text("Please fill in email");
+            return;
+        }
+        if ($("#inputPassword").val() != $("#inputPasswordAgain").val()) {
+            $("#txtAnswer").text("Passwords don't match");
+            return;
+        }
+
+
         var user = {
             Username: $("#inputUsername").val(),
             Password: $("#inputPassword").val(),
@@ -24,7 +46,8 @@
             contentType: 'application/json',
             data: JSON.stringify(user),
             success: function (result) {
-                $("#txtAnswer").text("User added! click List btn to see changes");
+                sessionStorage.setItem("username", user.Username);
+                window.location.replace("HomePage.html");
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 $("#txtAnswer").text("ERROR");
