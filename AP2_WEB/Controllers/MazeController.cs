@@ -27,20 +27,20 @@ namespace AP2_WEB.Controllers
         /// </summary>
         public static Dictionary<string, MazeGame> Pending { get { return pending; } set { pending = value; } }
 
-            /// <summary>
-            /// private multiPlayer dictionary.
-            /// </summary>
-            private static Dictionary<string, MazeGame> multi = new Dictionary<string, MazeGame>();
+        /// <summary>
+        /// private multiPlayer dictionary.
+        /// </summary>
+        private static Dictionary<string, MazeGame> multi = new Dictionary<string, MazeGame>();
         /// <summary>
         /// a public property.
         /// </summary>
-            public static Dictionary<string, MazeGame> Multi { get { return multi; } set { multi = value; } }
+        public static Dictionary<string, MazeGame> Multi { get { return multi; } set { multi = value; } }
 
-            /// <summary>
-            /// private singlePlayer dictionary.
-            /// </summary>
-            private static Dictionary<string, MazeGame> single = new Dictionary<string, MazeGame>();
-            /// <summary>
+        /// <summary>
+        /// private singlePlayer dictionary.
+        /// </summary>
+        private static Dictionary<string, MazeGame> single = new Dictionary<string, MazeGame>();
+        /// <summary>
         /// a public property.
         /// </summary>
         public static Dictionary<string, MazeGame> Single { get { return single; } set { single = value; } }
@@ -60,8 +60,7 @@ namespace AP2_WEB.Controllers
 
             return Pending.Values.Select(game => game.Name);
         }
-
-        // join
+        
         /// <summary>
         /// return requested maze
         /// </summary>
@@ -71,7 +70,7 @@ namespace AP2_WEB.Controllers
         {
             Maze maze = Pending.Values.FirstOrDefault(p => p.Maze.Name.Equals(id)).Maze;
 
-            if(maze == null) // not found
+            if (maze == null) // not found
             {
                 return JObject.Parse("");
             }
@@ -104,7 +103,7 @@ namespace AP2_WEB.Controllers
         }
 
         /// <summary>
-        /// a mze solution.
+        /// a maze solution.
         /// </summary>
         /// <param name="name">maze name</param>
         /// <param name="algo">solving algorithm</param>
@@ -117,8 +116,8 @@ namespace AP2_WEB.Controllers
 
             if (game.Solution == null)
             {
-                ISearcher<Position> searcher = algo == 0 ? (ISearcher<Position>) 
-                                    new BFS<Position, int>((s1, s2) => 1, (i, j) => i + j) : 
+                ISearcher<Position> searcher = algo == 0 ? (ISearcher<Position>)
+                                    new BFS<Position, int>((s1, s2) => 1, (i, j) => i + j) :
                                     new DFS<Position>();
                 SearchableMaze smaze = new SearchableMaze(game.Maze);
                 game.Solution = MazeSolution.FromSolution(searcher.Search(smaze));
@@ -126,30 +125,6 @@ namespace AP2_WEB.Controllers
             }
 
             return JObject.Parse(game.Solution.ToJSON());
-        }
-
-        /// <summary>
-        /// starting a maze.
-        /// </summary>
-        /// <param name="name">maze name</param>
-        /// <param name="rows">maze rows</param>
-        /// <param name="cols">maze cols</param>
-        /// <returns>a maze object</returns>
-        [HttpGet]
-        [Route("Maze/start/{name}/{rows}/{cols}")]
-        public JObject Start(string name, int rows, int cols)
-        {
-            Maze maze = new DFSMazeGenerator().Generate(rows, cols);
-
-            maze.Name = name;
-
-            Pending[name] = new MazeGame()
-            {
-                Name = name,
-                Maze = maze
-            };
-
-            return JObject.Parse(maze.ToJSON());
         }
     }
 }

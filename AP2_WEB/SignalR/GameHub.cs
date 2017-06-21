@@ -56,16 +56,19 @@ namespace AP2_WEB.SignalR
         /// <param name="name">a name</param>
         public void Join(string name)
         {
-            MazeGame game = MazeController.Pending[name];
+            if (MazeController.Pending.Keys.Contains(name))
+            {
+                MazeGame game = MazeController.Pending[name];
 
-            MazeController.Pending.Remove(name);
-            MazeController.Multi[name] = game;
+                MazeController.Pending.Remove(name);
+                MazeController.Multi[name] = game;
 
-            game.Players.Add(Context.ConnectionId, game.Maze.InitialPos);
+                game.Players.Add(Context.ConnectionId, game.Maze.InitialPos);
 
-            string json = game.Maze.ToJSON();
+                string json = game.Maze.ToJSON();
 
-            game.Players.Keys.ToList().ForEach(id => Clients.Client(id).broadcastMessage(json));
+                game.Players.Keys.ToList().ForEach(id => Clients.Client(id).broadcastMessage(json));
+            }
         }
 
         /// <summary>

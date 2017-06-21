@@ -3,6 +3,7 @@
     var pCol;
 }
 
+var keydownFlag = true;
 var context;
 var cellWidth;
 var cellHeight;
@@ -16,11 +17,7 @@ var startR;
 var startC;
 
 $(document).ready(function () {
-    if (sessionStorage.getItem("username") === null) { // no one connected
-        $("#menuBar").load("Menu.html");
-    } else {
-        $("#menuBar").load("ConnectedMenu.html");
-    }
+
     $("#rows").val(localStorage.getItem("defaultRows"));
     $("#cols").val(localStorage.getItem("defaultCols"));
     $("#solveAlgo").val(localStorage.getItem("defaultSearch"));
@@ -40,16 +37,16 @@ $(document).ready(function () {
                     maze = jsMaze;
                     window.document.title = maze.Name;
                     $("#mazeCanvas").mazeBoard(
-           maze.Maze, // the matrix containing the maze cells
-           maze.Start.Row,
-           maze.Start.Col, // initial position of the player
-           maze.End.Row,
-           maze.End.Col, // the exit position 
-           document.getElementById("player"), // player's icon (of type Image)
-           document.getElementById("exit"), // exit icon
-           true,
-           undefined
-            );
+                        maze.Maze, // the matrix containing the maze cells
+                        maze.Start.Row,
+                        maze.Start.Col, // initial position of the player
+                        maze.End.Row,
+                        maze.End.Col, // the exit position 
+                        document.getElementById("player"), // player's icon (of type Image)
+                        document.getElementById("exit"), // exit icon
+                        true,
+                        undefined
+                    );
                 })
         }
     });
@@ -124,11 +121,21 @@ $(document).ready(function () {
 
             document.getElementById("loader").style.display = "none";
 
+            if (keydownFlag) {
+                keydownFlag = false;
+                $(document).keydown(keyDown);
+            }
+
             return this;
         };
     })(jQuery);
 
-    $(document).on("keydown", keyDown);
+    if (sessionStorage.getItem("username") === null) { // no one connected
+        $("#menuBar").load("Menu.html");
+    } else {
+        $("#menuBar").load("ConnectedMenu.html");
+    }
+
 });
 
 function keyDown(e) {
