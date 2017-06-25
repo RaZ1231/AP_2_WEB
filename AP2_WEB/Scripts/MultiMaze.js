@@ -1,9 +1,8 @@
-﻿function playerObj() {
+﻿//player object.
+function playerObj() {
     var pRow;
     var pCol;
 }
-
-
 
 var apiUrl = "/api/Maze/"; // base uri of requests
 var apiUsers = "/api/Users/";
@@ -25,13 +24,16 @@ var myPlayerProp = new playerObj();
 
 var opPlayerProp = new playerObj();
 
+// function to close window when game ends.
 function windowClose() {
     chat.server.move(
         maze.Name, 4
     );
 }
 
+// when page is loaded.
 $(document).ready(function () {
+    //draw maze on canvas.
     (function ($) {
         $.fn.mazeBoard = function (
             mazeData,
@@ -106,6 +108,7 @@ $(document).ready(function () {
         }
     })(jQuery);
 
+    //checks which menu bar to load.
     if (sessionStorage.getItem("username") === null) { // no one is connected.
         $("#menuBar").load("Menu.html");
         $("#multiPlayer").load("NoUserConnected.html")
@@ -117,10 +120,12 @@ $(document).ready(function () {
         // Declare a proxy to reference the hub
         chat = $.connection.gameHub;
 
+        //continuous connection between server and player.
         chat.client.broadcastMessage = function (json) {
-            if (first) {
+            if (first) { // first message.
                 first = false;
                 $("#waitingMsg").text(" ");
+                $("#message").text(" ");
                 maze = JSON.parse(json);
                 $(document).title = maze.Name;
 
@@ -147,7 +152,7 @@ $(document).ready(function () {
                     keyDown
                 );
                 window.document.title = maze.Name;
-            } else {
+            } else { // else, during the game.
                 move(json);
             }
 
@@ -190,8 +195,24 @@ $(document).ready(function () {
                 }));
             });
         });
+
+        //if connection is slow.
+        $.connection.hub.connectionSlow(function () {
+            $("#message").text("connection is slow");
+        });
+
+        //if re-connecting.
+        $.connection.hub.reconnecting(function () {
+            $("#message").text("re-connecting...");
+        });
+
+        //if disconnected.
+        $.connection.hub.disconnected(function () {
+            $("#message").text("disconnected. Please refresh");
+        });
     }
 
+    //key down event handler function.
     function keyDown(e) {
         var playerProp = myPlayerProp;
         var context = document.getElementById("myMazeCanvas").getContext("2d");
@@ -266,6 +287,7 @@ $(document).ready(function () {
         }
     }
 
+    //other player moving event handler function.
     function move(json) {
         var moveObj = JSON.parse(json);
         var direction = moveObj.Direction;

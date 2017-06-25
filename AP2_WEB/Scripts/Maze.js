@@ -1,4 +1,5 @@
-﻿function playerObj() {
+﻿// a player object.
+function playerObj() {
     var pRow;
     var pCol;
 }
@@ -16,8 +17,9 @@ var exitC;
 var startR;
 var startC;
 
+// when page is loaded.
 $(document).ready(function () {
-
+    // get info from settings.
     $("#rows").val(localStorage.getItem("defaultRows"));
     $("#cols").val(localStorage.getItem("defaultCols"));
     $("#solveAlgo").val(localStorage.getItem("defaultSearch"));
@@ -30,6 +32,7 @@ $(document).ready(function () {
             Rows: $("#rows").val(),
             Cols: $("#cols").val()
         }
+        //checks validation of request.
         if (genRequest.Name != "" && genRequest.Rows > 0 && genRequest.Cols > 0) {
             document.getElementById("loader").style.display = "block";
             $.getJSON("/Maze/generate" + "/" + genRequest.Name + "/" + genRequest.Rows + "/" + genRequest.Cols)
@@ -56,15 +59,17 @@ $(document).ready(function () {
         var a = $("#solveAlgo").val() == 0 ? 0 : 1;
         var request = {
             Name: maze.Name,
-            Algo: a//$("#solveAlgo").val(),
+            Algo: a
         }
-        $.getJSON("/Maze/solve" + "/" + request.Name + "/" + request.Algo)
-            .done(function (ans) {
-                //$("#sol").text(ans.Name + " : " + ans.Solution);
-                solve(ans.Solution);
-            })
+        if (request.Name != "") { //checks validation of request.
+            $.getJSON("/Maze/solve" + "/" + request.Name + "/" + request.Algo)
+                .done(function (ans) {
+                    solve(ans.Solution);
+                })
+        }
     });
 
+    //draw maze on a canvas.
     (function ($) {
         $.fn.mazeBoard = function (
             mazeData,
@@ -130,6 +135,7 @@ $(document).ready(function () {
         };
     })(jQuery);
 
+    //checks which menu bar to load.
     if (sessionStorage.getItem("username") === null) { // no one connected
         $("#menuBar").load("Menu.html");
     } else {
@@ -138,6 +144,7 @@ $(document).ready(function () {
 
 });
 
+//key down event handling function.
 function keyDown(e) {
     if (playerProp.pRow != exitR || playerProp.pCol != exitC) {
         context.fillStyle = "white";
@@ -187,6 +194,7 @@ function keyDown(e) {
     }
 }
 
+//solving request event handling function.
 function solve(solution) {
     context.fillStyle = "white";
     context.fillRect(playerProp.pCol * cellWidth, playerProp.pRow * cellHeight, cellWidth, cellHeight);

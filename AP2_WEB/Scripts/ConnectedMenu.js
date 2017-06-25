@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿//when user is connected, this menu will be loaded.
+$(document).ready(function () {
     $("#usermenu").text("Hello, " + sessionStorage.username);
 
     $("#logOff").click(function (e) {

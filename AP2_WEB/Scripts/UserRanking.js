@@ -1,4 +1,5 @@
-﻿function stripes() {
+﻿//draws the table.
+function stripes() {
     $("tr").each(function () {
         $(this).removeClass("striped");
     });
@@ -7,7 +8,7 @@
     });
 }
 
-// when page start.
+// when page is loaded.
 $(document).ready(function () {
     if (sessionStorage.getItem("username") === null) { // no one connected
         $("#menuBar").load("Menu.html");
@@ -17,7 +18,7 @@ $(document).ready(function () {
     var apiUrl = "/api/Users/";
 
     $.getJSON(apiUrl).done(function (data) {
-        //$("#rankingTable").remove();
+        //get data from DB and add to tablescores.
         var i = 1;
         data.forEach(function (user) {
             var tr = document.createElement('TR');
@@ -29,7 +30,7 @@ $(document).ready(function () {
             tr.appendChild(td);
 
             td = document.createElement('TD');
-            td.appendChild(document.createTextNode(user.Username)); //+ "</br>" + user.JoinDate));
+            td.appendChild(document.createTextNode(user.Username)); 
             tr.appendChild(td);
 
             td = document.createElement('TD');
@@ -43,31 +44,6 @@ $(document).ready(function () {
             $("#rankingTable").append(tr);
             i = i + 1;
 
-/*
-            var table = $("#rankingTable");
-            var row = table.insertAfter();
-            var rank = row.insertAfter();
-            var username = row.insertAfter();
-            var wins = row.insertAfter();
-            var loses = row.insertAfter();
-
-            rank.innerHTML = "<b>" + i + "</b>";
-            username.innerHTML = user.Username + "</br>"
-                                + user.JoinDate;
-            wins.innerHTML = user.Wins;
-            loses.innerHTML = user.Loses;
-
-            i = i + 1;
-            */
-            /*
-            $("<li>" + "<b>" + user.Username + "</b> - "
-                + user.Password + ", "
-                + user.Email + ", "
-                + user.JoinDate + ", "
-                + user.Wins + ", "
-                + user.Loses
-                + "</li>").appendTo("#lstProducts");
-        });*/
         });
         stripes();
 

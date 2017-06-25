@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿//when page is loaded, checks whether a user is connected.
+$(document).ready(function () {
     if (sessionStorage.getItem("username") === null) { // no one connected
         $("#menuBar").load("Menu.html");
 
@@ -19,7 +20,7 @@
                     sessionStorage.setItem("username", user.Username);
                     window.location.replace("HomePage.html");
                 },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                error: function (XMLHttpRequest, textStatus, errorThrown) {//an error occured.
                     $("#txtLoginAnswer").text("ERROR");
                     switch (XMLHttpRequest.responseJSON) {
                         case "Username":
@@ -32,7 +33,7 @@
                 }
             });
         });
-    } else {
+    } else { // a user is connected. cannot login again.
         $("#menuBar").load("ConnectedMenu.html");
     }
 
