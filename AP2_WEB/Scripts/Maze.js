@@ -177,7 +177,7 @@ function keyDown(e) {
             }
             break;
         case 40: // down
-            if (playerProp.pRow < maze.Rows) {
+            if (playerProp.pRow < maze.Rows - 1) {
                 if (mazeMatrix[playerProp.pRow + 1][playerProp.pCol] != 1) {
                     playerProp.pRow = playerProp.pRow + 1;
                 }

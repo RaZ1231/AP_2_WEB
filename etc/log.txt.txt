@@ -1,0 +1,356 @@
+commit f8d8e6b265bda7fe6e66a8b8e24648c37a5a4886
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Sun Jun 25 17:33:23 2017 +0300
+
+    final changes :)
+    AP_2_WEB is done!
+
+commit 4ebc6b7c4ef9ed67ed71f9aaef7fadf269c5530b
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Thu Jun 22 01:21:23 2017 +0300
+
+    Done :)
+
+commit f43af471e2f3a0012145089a28b40ee27a21c18c
+Merge: ea5f73f 5012595
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Thu Jun 22 00:41:13 2017 +0300
+
+    mid merge
+
+commit ea5f73f403415202e3c19c8c2765d76501ff6b7a
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Thu Jun 22 00:39:20 2017 +0300
+
+    mid way
+
+commit 501259545561d5750ddaa2157b4c1e935e0e9a0f
+Author: Raz <raz.s121@gmail.com>
+Date:   Tue Jun 20 21:58:25 2017 +0300
+
+    other player closed game and some improvements
+
+commit 7d2376daa9e73e1a583bc3901a656c7217bf4c88
+Merge: e91fb8f 9873f5c
+Author: Raz <raz.s121@gmail.com>
+Date:   Mon Jun 19 22:52:09 2017 +0300
+
+    merge register, login
+
+commit 9873f5c75204ace71d53950b5f830a10a94d29ac
+Author: Raz <raz.s121@gmail.com>
+Date:   Mon Jun 19 22:50:25 2017 +0300
+
+    db
+
+commit f20b5950ee438e54d1fe899fad89d876d9024cef
+Author: Raz <raz.s121@gmail.com>
+Date:   Mon Jun 19 22:49:45 2017 +0300
+
+    mid register
+
+commit e91fb8f968bf5040e6d4d12368894f6d6ce2bb19
+Merge: b1de17c 3d8fce6
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Mon Jun 19 22:48:15 2017 +0300
+
+    login works
+
+commit 3d8fce6bc2427bc56bc5fb00a7fbf3637cc99669
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Mon Jun 19 22:45:24 2017 +0300
+
+    login added
+
+commit b1de17c810f56f9cfaf3a02186f44074d1ede3c4
+Author: Raz <raz.s121@gmail.com>
+Date:   Mon Jun 19 22:43:02 2017 +0300
+
+    db
+
+commit 2f6f27737de9d5052b46f5aed7ce85ff154e10ed
+Author: Raz <raz.s121@gmail.com>
+Date:   Mon Jun 19 22:31:30 2017 +0300
+
+    ranking table styling
+
+commit e4bc2d57d3a8e1877d987bd89a6edb03dfe076cc
+Merge: 67765b3 112b63d
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Mon Jun 19 21:25:02 2017 +0300
+
+    mid work
+
+commit 67765b36015f9eac28718b6bbb2ae4f76ac54927
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Mon Jun 19 21:23:49 2017 +0300
+
+    mid working
+
+commit 112b63d7ec41c59fb91cc357d21c5d6ebc61bc3c
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Mon Jun 19 21:21:20 2017 +0300
+
+    ranking works
+
+commit a3e1e69f94ae64493db400d9afdf8da903317ef4
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Mon Jun 19 13:05:04 2017 +0300
+
+    mid changes
+
+commit 82b3c20aa9a5049dfed3e8a74d07b7610ed01201
+Merge: da7fe53 44d2b26
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Mon Jun 19 01:04:08 2017 +0300
+
+    Merge branch 'master' of https://github.com/RaZ1231/AP_2_WEB.git
+
+commit da7fe53efbe8244d7773eac88f37c6f2e57cf180
+Merge: 3bee3cd 45e0a39
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Mon Jun 19 01:03:56 2017 +0300
+
+    after merge
+
+commit 44d2b266ce71369ce7a0ee4fb3837b152f8e1512
+Author: Raz <raz.s121@gmail.com>
+Date:   Mon Jun 19 01:03:17 2017 +0300
+
+    db
+
+commit 3bee3cd246134542f26636d8586a011029319b6a
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Mon Jun 19 01:02:37 2017 +0300
+
+    stash
+
+commit 45e0a39c1e674b9d50c36d90c6fbd0e0b081b010
+Author: Raz <raz.s121@gmail.com>
+Date:   Mon Jun 19 01:01:33 2017 +0300
+
+    win lose update
+
+commit d04508ad9f1a7b817b261a5337c36a8b73f9c8f1
+Merge: 344d7bc 50d317e
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Mon Jun 19 00:28:03 2017 +0300
+
+    Merge branch 'elish'
+
+commit 344d7bc0dbff42f247500ec8700100cc9c57c915
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Mon Jun 19 00:27:49 2017 +0300
+
+    local
+
+commit 971bca11af77904a024bc0107d20508baf6eba93
+Author: Raz <raz.s121@gmail.com>
+Date:   Sun Jun 18 23:46:48 2017 +0300
+
+    db
+
+commit ed18d3cf8c516d0d39a2ba2f371e689ec28e66a2
+Author: Raz <raz.s121@gmail.com>
+Date:   Sun Jun 18 23:45:58 2017 +0300
+
+    db
+
+commit 50d317e6ae084f3328dd3dd80e7c7de95481be50
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Sun Jun 18 22:47:25 2017 +0300
+
+    mid - multiplayer
+
+commit 464687cf5ab0414ef7beb3b09201aab41db61ee5
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Sun Jun 18 22:06:55 2017 +0300
+
+    multiplayer in process.
+    localstorage for settings and stuff added.
+
+commit 23d77e37fd6597f5df8b6f1ff2139fcf7b471e76
+Author: Raz <raz.s121@gmail.com>
+Date:   Sun Jun 18 22:01:52 2017 +0300
+
+    db
+
+commit 2dc397733cce97d4359325648fc653430befd4dd
+Author: Raz <raz.s121@gmail.com>
+Date:   Sun Jun 18 21:51:21 2017 +0300
+
+    db
+
+commit 31ce5c70c73eecbc77a0c5580d005053345309c9
+Merge: a01dbaa c4a88e6
+Author: Raz <raz.s121@gmail.com>
+Date:   Sun Jun 18 21:42:41 2017 +0300
+
+    Merge branch 'raz'
+
+commit c4a88e616b78e46fa419d60b928b5d26ae0b5e81
+Author: Raz <raz.s121@gmail.com>
+Date:   Sun Jun 18 21:41:44 2017 +0300
+
+    db
+
+commit a01dbaab57671b570e3e9083df0290268cbb512f
+Merge: 5103eb7 5b869ec
+Author: Raz <raz.s121@gmail.com>
+Date:   Sun Jun 18 02:07:12 2017 +0300
+
+    Merge branch 'raz'
+
+commit 5b869ec1d62692e6cf2c0a07a084fdc7d3e035fc
+Author: Raz <raz.s121@gmail.com>
+Date:   Sun Jun 18 02:06:37 2017 +0300
+
+    app data 3
+
+commit 470740e4b746e887cc1a4a4b7dcc8f9fcc406711
+Author: Raz <raz.s121@gmail.com>
+Date:   Sun Jun 18 02:05:49 2017 +0300
+
+    app data 2
+
+commit 24d229c29101917342b24ad844f0afeefd015000
+Author: Raz <raz.s121@gmail.com>
+Date:   Sun Jun 18 02:05:01 2017 +0300
+
+    app data
+
+commit 5103eb7aeba53626316c09e3da6fc179f209a1ac
+Author: Raz <raz.s121@gmail.com>
+Date:   Sat Jun 17 22:19:46 2017 +0300
+
+    because elisheva is balaganim only
+
+commit 6d9e651eed56d1f3972c2b964f5fa03b9fac22ed
+Merge: 4195b13 ab64129
+Author: Raz <raz.s121@gmail.com>
+Date:   Sat Jun 17 22:10:34 2017 +0300
+
+    Merge branch 'raz'
+
+commit ab6412923fac4cf5208875a7889ed7d406f74ed0
+Author: Raz <raz.s121@gmail.com>
+Date:   Sat Jun 17 22:07:03 2017 +0300
+
+    db support
+
+commit 4195b1328584e5fa85a72d08b6c8120aaa29766d
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Sat Jun 17 21:50:05 2017 +0300
+
+    multiplayer draw maze
+
+commit 9dbe86ade5e6e882e2982e0bb804cd61cc6c803f
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Fri Jun 16 19:31:48 2017 +0300
+
+    single player works.
+
+commit e366b247b61d074e32dbb66d1f61daabe2120eab
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Fri Jun 16 13:11:23 2017 +0300
+
+    mid-work
+
+commit b3729870dc5b7078597dc2e35831ee98ec48b134
+Merge: e0a4bd9 deb0d43
+Author: Raz <raz.s121@gmail.com>
+Date:   Thu Jun 15 20:38:10 2017 +0300
+
+    Merge branch 'raz'
+
+commit e0a4bd9375776a947b7c47da6927c569de4849aa
+Author: Raz <raz.s121@gmail.com>
+Date:   Thu Jun 15 20:37:50 2017 +0300
+
+    pre merge
+
+commit deb0d43b8c7bace42bcaf191b2216538819e20f7
+Author: Raz <raz.s121@gmail.com>
+Date:   Thu Jun 15 20:35:00 2017 +0300
+
+    list, start, join, move
+
+commit bc7d7d3eab1fa0ebb981c4324b3a6045c2aefd1d
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Thu Jun 15 20:34:44 2017 +0300
+
+    server-client integration has began!
+
+commit 05452b5b88ce1173d74c2d310134618072e1c777
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Wed Jun 14 23:25:33 2017 +0300
+
+    merged
+
+commit d8800efedb382e5f2ccf347ba92bb9ebebbad505
+Merge: 3e96840 8e16512
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Wed Jun 14 23:18:00 2017 +0300
+
+    vicious merge!!!!!!
+
+commit 8e16512b5e53b3da3ac925d7cca8951973de20b4
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Wed Jun 14 22:52:12 2017 +0300
+
+    client side. multi player not drawing yet.
+
+commit 3e96840d2afd6c990a84a6158e0e44b1deebaf02
+Author: Raz <raz.s121@gmail.com>
+Date:   Wed Jun 14 22:50:05 2017 +0300
+
+    server side - dlls, generate, solve, signalR
+
+commit 67a4573e32e20aa0f48626cb8794dbc7f1dde467
+Author: Raz <raz.s121@gmail.com>
+Date:   Wed Jun 14 22:47:09 2017 +0300
+
+    server side - dlls, generate, solve, signalR
+
+commit 3ccd2a3aa6f8173ba409582aae10fdd0410cc980
+Author: Raz <raz.s121@gmail.com>
+Date:   Wed Jun 14 22:45:26 2017 +0300
+
+    server side - dlls, generate, solve, signalR
+
+commit d1201f956b3accca94d107476cb57a7b29bd460d
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Wed Jun 14 03:29:09 2017 +0300
+
+    login, register and some more forms added.
+    need to finish solve animation :)
+
+commit 4f78270ce9a85c9bc629cf7ede4f83b633acff21
+Author: Raz <raz.s121@gmail.com>
+Date:   Tue Jun 13 18:45:42 2017 +0300
+
+    basic single player and moving
+
+commit 2910c738c2931d0d28b9cba55d492b20635e293b
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Tue Jun 13 02:12:23 2017 +0300
+
+    Single Player in process
+
+commit ffa240806a2e223b4da105585bd49b5f88efc820
+Author: Elisheva Broyer <elish214@gmail.com>
+Date:   Sun Jun 11 23:14:07 2017 +0300
+
+    Begin
+
+commit fd46c136588d586210b06e5125db25d165ad2cc9
+Author: Raz <raz.s121@gmail.com>
+Date:   Sun Jun 11 23:02:09 2017 +0300
+
+    Add project files.
+
+commit a923d154ae4fe5058ec7a1ffc04a6d876b29e90e
+Author: Raz <raz.s121@gmail.com>
+Date:   Sun Jun 11 23:02:06 2017 +0300
+
+    Add .gitignore and .gitattributes.
